@@ -43,7 +43,7 @@
           </span>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="?page=my-profile">Profil</a>
+          <a class="dropdown-item" href="?page=profil-saya/my-profile">Profil</a>
           <a class="dropdown-item" href="#">Aktivitas</a>
           <button class="dropdown-item btn btn-danger" onclick="confirmLogout()">Keluar</button>
 

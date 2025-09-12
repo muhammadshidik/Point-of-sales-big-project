@@ -10,7 +10,7 @@ $result = mysqli_query($config, $query);
 <div class="container mt-4">
     <div class="card shadow">
         <div class="card-header">
-            <h4>Data Banner</h4>
+            <h5>Data Banner</h5>
         </div>
         <div class="card-body">
             <?php include 'admin/controller/alert-data-crud.php'; // Semicolon added 

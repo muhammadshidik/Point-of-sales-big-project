@@ -19,8 +19,8 @@ require_once 'admin/controller/koneksi.php';
 
 // Mengecek apakah session 'id' kosong (belum login atau session habis)
 if (empty($_SESSION['id'])) {
-	// Jika belum login, arahkan pengguna ke halaman logout (biasanya akan diarahkan ke login page lagi)
-	header('Location: ?page=keluar');
+  // Jika belum login, arahkan pengguna ke halaman logout (biasanya akan diarahkan ke login page lagi)
+  header('Location: ?page=keluar');
 }
 ?>
 
@@ -42,26 +42,24 @@ if (empty($_SESSION['id'])) {
     <?php include 'admin/inc/navbar.php' ?>
     <?php include 'admin/inc/sidebar.php' ?>
     <main role="main" class="main-content">
-      
+
       <!-- start konten utama  -->
-               <?php
-        // Memeriksa apakah parameter 'page' ada di URL.
-        if (isset($_GET['page'])) {
-          // Memeriksa apakah file PHP dengan nama yang sesuai dengan parameter 'page'
-          // ada di dalam folder 'content'.
-          if (file_exists("admin/content/" . $_GET['page'] . ".php")) {
-            // Jika file ada, include file tersebut. Ini berfungsi untuk memuat konten dinamis
-            // berdasarkan halaman yang diminta.
-            include('admin/content/' . $_GET['page'] . ".php");
-          } else {
-            // Jika file tidak ditemukan, include halaman 'notfound.php'.
-            include "notfound.php";
-          }
+      <?php
+      // Memeriksa apakah parameter 'page' ada di URL.
+      if (isset($_GET['page'])) {
+        // Bersihkan input supaya aman
+        $page = str_replace(['..', './', '\\'], '', $_GET['page']);
+
+        if (file_exists("admin/content/" . $page . ".php")) {
+          include('admin/content/' . $page . ".php");
         } else {
-          // Jika parameter 'page' tidak ada di URL, secara default include halaman 'home.php'.
-          include 'admin/content/dashboard.php';
+          include "admin/content/notfound/notfound.php";
         }
-        ?>
+      } else {
+        include 'admin/content/dashboard/dashboard.php';
+      }
+
+      ?>
       <!-- end konten utama -->
       <!-- .container-fluid -->
       <?php include 'admin/inc/container.php' ?>
@@ -71,4 +69,5 @@ if (empty($_SESSION['id'])) {
   <!-- .wrapper -->
   <?php include 'admin/inc/js.php' ?>
 </body>
+
 </html>

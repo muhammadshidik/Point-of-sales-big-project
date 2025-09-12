@@ -56,10 +56,36 @@ function getOrderStatus($status_code)
 {
     switch ($status_code) {
         case 0:
-            return '<span class="badge bg-primary">Tersedia</span>';
+            return '<span class="badge">Diterima </span>';
         case 1:
-            return '<span class="badge bg-danger">Barang Kosong</span>';
+            return '<span class="badge"Ditolak</span>';
         default:
-            return '<span class="badge bg-secondary">Tidak Diketahui</span>';
+            return '<span class="badge">Tidak Diketahui</span>';
+    }
+}
+
+function getStatusList($status_code)
+{
+    switch ($status_code) {
+        case 0:
+            return '<span class="badge">Tersedia</span>';
+        case 1:
+            return '<span class="badge">Barang Kosong</span>';
+        default:
+            return '<span class="badge">Pending</span>';
+    }
+}
+
+function pembayaran($status_code)
+{
+    switch ($status_code) {
+        case 0:
+            return '<span class="badge">Tempo</span>';
+        case 1:
+            return '<span class="badge">Transfer</span>';
+        case 2:
+            return '<span class="badge">Tunai</span>';
+        default:
+            return '<span class="badge">Tidak Diketahui</span>';
     }
 }
