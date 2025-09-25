@@ -98,10 +98,12 @@ if (isset($_POST['save'])) {
         <div class="card-body">
             <?php include 'admin/controller/alert-data-crud.php'; // Semicolon added 
             ?>
-            <a class="btn btn-primary mb-3 btn-sm" data-toggle="modal" data-target="#defaultModal">Tambah Transaksi</a>
+            <div class="button-action">
+                <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#defaultModal"> <i class="fe fe-plus fe-16"></i></a>
+            </div>
             <!-- table -->
-            <table class="table table-borderless table-hover  mt-3 datatable">
-                <thead class="table-dark">
+            <table class="table table-borderless table-hover">
+                <thead">
                     <tr>
                         <th>No</th>
                         <th>Kode Transaksi</th>
@@ -110,40 +112,30 @@ if (isset($_POST['save'])) {
                         <th>Total (Rp)</th>
                         <th>Aksi</th>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php $no = 1;
-                    foreach ($rows as $index => $row): ?>
-                        <tr>
-                            <td><?php echo $no++; ?></td>
-                            <td><?php echo $row['no_transaction'] ?></td>
-                            <td><?php echo $row['username'] ?></td>
-                            <td><?php echo $row['customer_name'] ?></td>
-                            <td><?php echo "Rp." .  $row['sub_total'] ?></td>
-                            <td>
-                                <a href="?page=print&=<?php echo $row['id'] ?>"
-                                    class="btn btn-secondary btn-sm" target="_blank">Print</a>
-                                <a onclick="return confirm('Are you sure wanna delete this data??')"
-                                    href="?page=POS/pos&delete=<?php echo $row['id'] ?>"
-                                    class="btn btn-danger btn-sm">Delete</a>
+                    </thead>
+                    <tbody>
+                        <?php $no = 1;
+                        foreach ($rows as $index => $row): ?>
+                            <tr>
+                                <td><?= $no++; ?></td>
+                                <td><?= $row['no_transaction'] ?></td>
+                                <td><?= $row['username'] ?></td>
+                                <td><?= $row['customer_name'] ?></td>
+                                <td><?= "Rp." .  $row['sub_total'] ?></td>
+                                <td>
+                                    <div class="button-action">
+                                        <a href="print.php?utang=<?= $row['id'] ?>"
+                                            class="btn btn-primary btn-sm" target="_blank"> <i class="fe fe-printer fe-16"></i></a>
+                                        <a onclick="return confirm('Are you sure wanna delete this data??')"
+                                            href="?page=POS/pos&delete=<?= $row['id'] ?>"
+                                            class="btn btn-danger btn-sm"><i class="fe fe-trash fe-16"></i></a>
+                                    </div>
 
-                            </td>
-                        </tr>
-                    <?php endforeach ?>
-                </tbody>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
+                    </tbody>
             </table>
-            <nav aria-label="Table Paging" class="mb-0 text-muted">
-                <ul class="pagination justify-content-center mb-0">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
-
-
-
             <div class="modal fade bd-example-modal-xl" id="defaultModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -156,7 +148,7 @@ if (isset($_POST['save'])) {
                                                                                 else:
                                                                                     $title = "Transaksi";
                                                                                 endif;
-                                                                                ?> <?php echo $title ?></h5>
+                                                                                ?> <?= $title ?></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -165,14 +157,16 @@ if (isset($_POST['save'])) {
                             <div class="card-body">
                                 <form action="" method="post">
                                     <div class="row">
-                                        <div class="col-sm-4">
+                                        <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="">Kode Transaksi </label>
-                                                <input value="<?php echo $no_transaction ?>"
+                                                <input value="<?= $no_transaction ?>"
                                                     type="text" class="form-control"
                                                     readonly
                                                     name="no_transaction">
                                             </div>
+                                        </div>
+                                        <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Nama Pelanggan</label>
                                                 <select name="id_customer" class="form-control select2" id="simple-select2" required>
@@ -185,75 +179,104 @@ if (isset($_POST['save'])) {
                                                     </optgroup>
                                                 </select>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="">Nama Produk</label>
                                                 <select name="id_product" id="id_product" class="form-control select2">
                                                     <optgroup label="Pilih Kategori">
                                                         <?php foreach ($rowProducts as $rowProduct): ?>
-                                                            <option data-price="<?php echo $rowProduct['harga_jual'] ?>" value="<?php echo $rowProduct['id'] ?>">
-                                                                <?php echo $rowProduct['nama_produk'] ?>
+                                                            <option data-price="<?= $rowProduct['harga_jual'] ?>" value="<?= $rowProduct['id'] ?>">
+                                                                <?= $rowProduct['nama_produk'] ?>
                                                             </option>
                                                         <?php endforeach ?>
                                                     </optgroup>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="">Nama Kasir </label>
-                                                <input value="<?php echo $_SESSION['username'] ?>"
+                                                <input value="<?= $_SESSION['username'] ?>"
                                                     type="text" class="form-control"
                                                     readonly>
-                                                <input type="hidden" name="id_user" value="<?php echo $_SESSION['id'] ?>">
+                                                <input type="hidden" name="id_user" value="<?= $_SESSION['id'] ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="">Tanggal Transaksi </label>
+                                                <input value="<?= date('Y-m-d') ?>"
+                                                    type="date" class="form-control"
+                                                    readonly>
+                                                <input type="hidden" name="tanggal" value="<?= $_SESSION['id'] ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label>Metode Pembayaran</label>
+                                                <select name="status" class="form-control select2" id="simple-select2" required>
+                                                    <optgroup label="Pilih status">
+                                                        <option value="0" <?= (isset($rowEdit['status']) && $rowEdit['status'] == 0) ? ' selected' : '' ?>>
+                                                            <?= pembayaran(0) ?>
+                                                        </option>
+                                                        <option value="1" <?= (isset($rowEdit['status']) && $rowEdit['status'] == 1) ? ' selected' : '' ?>>
+                                                            <?= pembayaran(1) ?>
+                                                        </option>
+                                                    </optgroup>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div align="right" class="mb-3">
-                                        <button type="button" class="btn btn-primary addRow" id="addRow">Tambah Pesanan </button>
-                                    </div>
-                                    <table class="table table-borderless table-hover  mt-3 datatable" id="myTable">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Nama Produk</th>
-                                                <th>Qty</th>
-                                                <th>Total</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                    <br>
-
-                                    <p><strong>Total : Rp. <span id="grandTotal"></span></strong></p>
-                                    <input type="hidden" name="grand_total" id="grandTotalInput" value="0">
-
-                                    <div class="mb-3">
-                                        <label for="uangBayar" class="form-label">Uang Bayar</label>
-                                        <input type="number" id="uangBayar" class="form-control" placeholder="Masukkan uang pembayaran">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="kembalian" class="form-label">Kembalian</label>
-                                        <input type="text" id="kembalian" class="form-control" readonly>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <input type="submit" class="btn btn-success" name="save" value="Simpan">
-                                    </div>
-                                </form>
                             </div>
+
+                            <div align="right" class="mb-3">
+                                <button type="button" class="btn btn-success addRow" id="addRow"><i class="fe fe-plus fe-16"></i> </button>
+                            </div>
+                            <table class="table table-borderless table-hover  mt-3 datatable" id="myTable">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Produk</th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <br>
+
+                            <p><strong>Total : Rp. <span id="grandTotal"></span></strong></p>
+                            <input type="hidden" name="grand_total" id="grandTotalInput" value="0">
+
+                            <div class="mb-3">
+                                <label for="uangBayar" class="form-label">Uang Bayar</label>
+                                <input type="number" id="uangBayar" class="form-control" placeholder="Masukkan uang pembayaran">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="kembalian" class="form-label">Kembalian</label>
+                                <input type="text" id="kembalian" class="form-control" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary btn-sm" name="save" value=""><i class="fe fe-save fe-16"></i></button>
+                            </div>
+                            </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn mb-2 btn-secondary btn-sm" data-dismiss="modal"><i class="fe fe-arrow-left fe-16"></i></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script>

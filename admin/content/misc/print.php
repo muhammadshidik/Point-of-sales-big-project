@@ -129,7 +129,7 @@ WHERE id_order = '$id'");
 <body>
     <div class="struct">
         <div class="struct-header">
-            <img src="" alt="" width="50px">
+            <img src="../../img/logo/logo3.png" alt="Logo" width="50px">
             <p><strong>Laundry App</strong></p>
             <p>Jl.Tb. Simatupang, RT.011, RW.002, Kel. Susukan, Kec. Ciracas, Jakarta Timur</p>
             <p>0818-0818-0818</p>

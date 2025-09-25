@@ -3,16 +3,22 @@ require_once 'admin/controller/koneksi.php';
 
 // Ambil data pembelian + supplier
 $result = mysqli_query($config, "
-    SELECT pb.id_pemberian, pb.tanggal, pb.no_invoice, 
+    SELECT pb.id, pb.tanggal, pb.no_invoice, 
            s.nama_supplier, pb.total, 
-           pb.status, pb.pembayaran
-    FROM pemberian_barang pb
-    LEFT JOIN supplier s ON pb.id_supplier = s.id_supplier
+           pb.status, pb.pembayaran, k.nama
+    FROM pembelian_barang pb
+    LEFT JOIN supplier s ON pb.id_supplier = s.id
+    LEFT JOIN karyawan k ON pb.id_karyawan = k.id
     ORDER BY pb.tanggal DESC
 ");
+
+if (isset($_GET['delete'])) {
+    $idDelete = $_GET['delete'];
+    $query = mysqli_query($config, "DELETE FROM pembelian_barang WHERE id='$idDelete'");
+    header("Location: ?page=pemberian-barang/daftar-pemberian&delete=success");
+    die;
+}
 ?>
-
-
 <div class="container mt-4">
     <div class="card shadow">
         <div class="card-header">
@@ -21,9 +27,12 @@ $result = mysqli_query($config, "
         <div class="card-body">
             <?php include 'admin/controller/alert-data-crud.php'; // Semicolon added 
             ?>
-            <a href="?page=pemberian-barang/add-pembelian" class="btn btn-primary mb-3 btn-sm">Tambah</a>
+
             <!-- table -->
             <table class="table table-borderless table-hover  mt-3">
+                <div class="button-action">
+                    <a href="?page=pemberian-barang/add-pembelian" class="btn btn-success btn-sm"><i class="fe fe-plus fe-16"></i></a>
+                </div>
                 <thead>
                     <tr>
                         <th>No</th>
@@ -44,38 +53,41 @@ $result = mysqli_query($config, "
                         while ($row = mysqli_fetch_assoc($result)) : ?>
                             <tr>
                                 <td><?= $no++ ?></td>
-                                <td><?= date('d-m-Y', strtotime($row['tanggal'])) ?></td>
+                                <td><?= $row['tanggal'] ?></td>
                                 <td><?= $row['no_invoice'] ?></td>
                                 <td><?= $row['nama_supplier'] ?></td>
                                 <td>Rp <?= number_format($row['total'], 0, ',', '.') ?></td>
-                                <?php $status = getStatusList($row['status']) ?>
+                                <?php $status = getOrderStatus($row['status']) ?>
                                 <td><?= $status ?></td>
                                 <?php $status = pembayaran($row['pembayaran']) ?>
                                 <td><?= $status ?></td>
                                 <td>
-                                    <!-- Tombol Ubah -->
-                                    <a href="?page=pemberian-barang/add-pembelian&edit=<?= $row['id_pemberian']; ?>">
-                                        <button class="btn btn-secondary btn-sm">
-                                            Ubah
+                                    <div class="button-action">
+                                        <a href="?page=pemberian-barang/add-pembelian" class="btn btn-success btn-sm"><i class="fe fe-plus fe-16"></i></a>
+                                        <!-- Tombol Ubah -->
+                                        <a href="?page=pemberian-barang/add-pembelian&edit=<?= $row['id']; ?>">
+                                            <button class="btn btn-info btn-sm">
+                                                <i class="fe fe-edit fe-16"></i>
+                                            </button>
+                                        </a>
+                                        <!-- Tombol Detail -->
+                                        <button type="button" class="btn btn-secondary btn-sm"
+                                            data-toggle="modal"
+                                            data-target="#detailModal<?= $row['id']; ?>">
+                                            <i class="fe fe-file-text fe-16"></i>
                                         </button>
-                                    </a>
-                                    <!-- Tombol Hapus -->
-                                    <a onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
-                                        href="?page=pemberian-barang/daftar-pembelian&delete=<?= $row['id_pemberian']; ?>">
-                                        <button class="btn btn-danger btn-sm">
-                                            Hapus
-                                        </button>
-                                    </a>
-                                    <button type="button" class="btn btn-primary btn-sm"
-                                        data-toggle="modal"
-                                        data-target="#detailModal<?= $row['id_pemberian']; ?>">
-                                        Detail
-                                    </button>
-
+                                        <!-- Tombol Hapus -->
+                                        <a onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
+                                            href="?page=pemberian-barang/daftar-pembelian&delete=<?= $row['id']; ?>">
+                                            <button class="btn btn-danger btn-sm">
+                                                <i class="fe fe-trash fe-16"></i>
+                                            </button>
+                                        </a>
+                                    </div>
                                 </td>
 
                             </tr>
-                            <div class="modal fade" id="detailModal<?= $row['id_pemberian']; ?>" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="detailModal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-xl" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -97,7 +109,7 @@ $result = mysqli_query($config, "
                                                                 </li>
                                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                     <span>Tanggal</span>
-                                                                    <strong><?= date('d-m-Y', strtotime($row['tanggal'])); ?></strong>
+                                                                    <strong><?= $row['tanggal']; ?></strong>
                                                                 </li>
                                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                     <span>Supplier</span>
@@ -111,7 +123,7 @@ $result = mysqli_query($config, "
                                                         </div>
                                                     </div>
                                                 </div>
-                                             
+
                                                 <div class="col-md-6 my-4">
                                                     <div class="card shadow">
                                                         <div class="card-body">
@@ -131,11 +143,11 @@ $result = mysqli_query($config, "
                                                                 </li>
                                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                     <span>Dibuat Oleh</span>
-                                                                    <strong><?= isset($row['karyawan']) ? $row['karyawan'] : 'Masih dalam proses'; ?></strong>
+                                                                    <strong><?= isset($row['nama']) ? $row['nama'] : 'Masih dalam proses'; ?></strong>
                                                                 </li>
                                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                     <span>Diterima Oleh </span>
-                                                                    <strong><?= isset($row['karyawan']) ? $row['karyawan'] : 'Masih dalam proses'; ?></strong>
+                                                                    <strong><?= isset($row['nama']) ? $row['nama'] : 'Masih dalam proses'; ?></strong>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -145,14 +157,15 @@ $result = mysqli_query($config, "
                                                     <div class="card shadow">
                                                         <div class="card-body">
                                                             <h5 class="card-title">Riwayat Pembayaran</h5>
+                                                            <h5>DUARR</h5>
                                                         </div>
-                                                        <h5>DUARR</h5>
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal"><i class="fe fe-arrow-left fe-16"></i></button>
                                         </div>
                                     </div>
                                 </div>

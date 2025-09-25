@@ -11,12 +11,8 @@ $queryData = mysqli_query($config, "SELECT user.id, user.username, user.email, l
         </div>
         <div class="card-body">
             <?php include 'admin/controller/alert-data-crud.php' ?>
-            <div class="button-action">
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#defaultModal"> Tambah User </button>
-                <!-- Modal -->
-            </div>
             <table class="table table-borderless table-hover  mt-3 datatable">
-                <thead class="table-dark">
+                <thead class="">
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
@@ -33,17 +29,21 @@ $queryData = mysqli_query($config, "SELECT user.id, user.username, user.email, l
                             <td><?= isset($rowData['username']) ? $rowData['username'] : '-' ?></td>
                             <td><?= isset($rowData['email']) ? $rowData['email'] : '-' ?></td>
                             <td>
-                                <a href="?page=tambah-user&edit=<?php echo $rowData['id'] ?>">
-                                    <button class="btn btn-secondary btn-sm">
-                                        Ubah
-                                    </button>
-                                </a>
-                                <a onclick="return confirm ('Apakah anda yakin akan menghapus data ini?')"
-                                    href="?page=tambah-user&delete=<?php echo $rowData['id'] ?>">
-                                    <button class="btn btn-danger btn-sm">
-                                        Hapus
-                                    </button>
-                                </a>
+                                <div class="button-action">
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#defaultModal"> <i class="fe fe-plus fe-16"></i></button>
+                                    <!-- Modal -->
+                                    <a href="?page=user/tambah-user&edit=<?php echo $rowData['id'] ?>">
+                                        <button class="btn btn-info btn-sm">
+                                            <i class="fe fe-edit fe-16"></i>
+                                        </button>
+                                    </a>
+                                    <a onclick="return confirm ('Apakah anda yakin akan menghapus data ini?')"
+                                        href="?page=tuser/ambah-user&delete=<?php echo $rowData['id'] ?>">
+                                        <button class="btn btn-danger btn-sm">
+                                            <i class="fe fe-trash-2 fe-16"></i>
+                                        </button>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     <?php endwhile; // End While 
@@ -83,13 +83,13 @@ $queryData = mysqli_query($config, "SELECT user.id, user.username, user.email, l
                         </small>
                     </div>
                     <div class="mb-3">
-                        <input type="submit" class="btn btn-success" name="save">
+                        <button type="submit" class="btn btn-success btn-sm" name="save"> <i class="fe fe-save fe-16"></i></button>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn mb-2 btn-primary">Save changes</button>
+                <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal"> <i class="fe fe-arrow-left fe-16"></i></button>
+                <button type="button" class="btn mb-2 btn-primary"> <i class="fe fe-save fe-16"></i></i></button>
             </div>
         </div>
     </div>

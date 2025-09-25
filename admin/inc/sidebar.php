@@ -65,9 +65,15 @@ $dataNavbar = mysqli_fetch_assoc($queryNavbar);
         </a>
       </li>
       <li class="nav-item w-100">
-        <a class="nav-link" href="?page=slider">
+        <a class="nav-link" href="?page=banner/slider">
           <i class="fe fe-airplay fe-16"></i>
           <span class="ml-3 item-text">Manajemen banner</span>
+        </a>
+      </li>
+       <li class="nav-item w-100">
+        <a class="nav-link" href="?page=karyawan/karyawan">
+          <i class="fe fe-user-check fe-16"></i>
+          <span class="ml-3 item-text">Manajemen Karyawan</span>
         </a>
       </li>
       <li class="nav-item w-100">
@@ -79,13 +85,19 @@ $dataNavbar = mysqli_fetch_assoc($queryNavbar);
       <li class="nav-item w-100">
         <a class="nav-link" href="?page=pemberian-barang/daftar-pembelian">
           <i class="fe fe-shopping-bag fe-16"></i>
-          <span class="ml-3 item-text">Daftar Pembelian</span>
+          <span class="ml-3 item-text">Purchases</span>
         </a>
       </li>
       <li class="nav-item w-100">
         <a class="nav-link" href="?page=supplier/supplier">
           <i class="fe fe-truck fe-16"></i>
           <span class="ml-3 item-text">Data Supplier</span>
+        </a>
+      </li>
+            <li class="nav-item w-100">
+        <a class="nav-link" href="?page=menu-produk/menu-list">
+          <i class="fe fe-monitor fe-16"></i>
+          <span class="ml-3 item-text">Mobile POS</span>
         </a>
       </li>
       <li class="nav-item w-100">
@@ -101,7 +113,7 @@ $dataNavbar = mysqli_fetch_assoc($queryNavbar);
         </a>
       </li>
       <li class="nav-item w-100">
-        <a class="nav-link" href="?page=laporan-keuangan/laporan-keuangan">
+        <a class="nav-link" href="?page=report/report">
           <i class="fe fe-file-text fe-16"></i>
           <span class="ml-3 item-text">Laporan Keuangan</span>
         </a>

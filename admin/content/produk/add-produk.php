@@ -119,75 +119,80 @@ $queryUnit = mysqli_query($config, "SELECT * FROM unit ORDER BY nama_unit ASC");
 ?>
 
 <div class="container mt-4">
-  <div class="card shadow">
+  <div class="card shadow mb-4">
     <div class="card-header">
-      <h3><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Produk</h3>
+      <h5><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Produk</h5>
     </div>
     <div class="card-body">
-      <form method="POST" enctype="multipart/form-data">
-        <div class="mb-3">
-          <label class="form-label">Nama Produk</label>
-          <input type="text" name="nama_produk" class="form-control" required value="<?= $rowEdit['nama_produk'] ?? '' ?>">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">kode Produk</label>
-          <input value="<?php echo $kode_produk ?>" type="text" class="form-control" readonly name="kode_produk">
-        </div>
-        <div class="mb-3 mt-3">
-          <label class="form-label">Deskripsi</label>
-          <textarea id="editor" name="deskripsi" class="form-control summernote" rows="3" style="min-height:100px;"></textarea>
-        </div>
-        <div class="form-group mb-3">
-          <label for="simple-select2">Kategori</label>
-          <select name="kategori_id" class="form-control select2" id="simple-select2" required>
-            <optgroup label="Pilih Kategori">
-              <?php while ($kategori = mysqli_fetch_assoc($queryCategory)) : ?>
-                <option value="<?= $kategori['id'] ?>" <?= (isset($rowEdit['kategori_id']) && $rowEdit['kategori_id'] == $kategori['id']) ? ' selected' : '' ?>>
-                  <?= $kategori['nama_kategori'] ?>
-                </option>
-              <?php endwhile; ?>
-            </optgroup>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Harga</label>
-          <input type="number" name="harga_jual" class="form-control" required value="<?= $rowEdit['harga_jual'] ?? '' ?>">
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="simple-select2">Unit</label>
-          <select name="id_unit" class="form-control select2" id="simple-select2" required>
-            <optgroup label="Pilih Unit">
-              <?php while ($unit = mysqli_fetch_assoc($queryUnit)) : ?>
-                <option value="<?= $unit['id'] ?>" <?= (isset($rowEdit['id_unit']) && $rowEdit['id_unit'] == $unit['id']) ? ' selected' : '' ?>>
-                  <?= $unit['nama_unit'] ?>
-                </option>
-              <?php endwhile; ?>
-            </optgroup>
-          </select>
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="simple-select2">Stok</label>
-          <input type="number" name="stok" class="form-control" required value="<?= $rowEdit['stok'] ?? '' ?>">
-        </div>
-        <div class="form-group mb-3">
-          <label for="customFile">Upload Gambar</label>
-          <div class="custom-file">
-            <input name="image" type="file" class="custom-file-input" id="customFile" accept=".jpg,.jpeg,.png" <?= isset($_GET['edit']) ? '' : 'required' ?>>
-            <label class="custom-file-label" for="customFile">Choose file</label>
-            <?php if (!empty($rowEdit['gambar'])): ?>
-              <small class="text-muted">Gambar saat ini: <?= $rowEdit['gambar'] ?></small>
-            <?php endif; ?>
+      <div class="form-row">
+        <form method="POST" enctype="multipart/form-data">
+          <div class="form-group col-md-8">
+            <label class="form-label">Nama Produk</label>
+            <input type="text" name="nama_produk" class="form-control" required value="<?= $rowEdit['nama_produk'] ?? '' ?>">
           </div>
-        </div>
-        <div>
-          <button type="submit" class="btn btn-primary" name="<?= isset($_GET['edit']) ? 'edit' : 'add' ?>">
-            <?= isset($_GET['edit']) ? 'Simpan Perubahan' : 'Tambah Produk' ?>
-          </button>
-        </div>
-      </form>
+          <div class="form-group col-md-8">
+            <label class="form-label">kode Produk</label>
+            <input value="<?php echo $kode_produk ?>" type="text" class="form-control" readonly name="kode_produk">
+          </div>
+          <div class="form-group col-md-8">
+            <label class="form-label">Deskripsi</label>
+            <textarea id="editor" name="deskripsi" class="form-control summernote" rows="3" style="min-height:100px;"></textarea>
+          </div>
+          <div class="form-group col-md-8">
+            <label for="simple-select2">Kategori</label>
+            <select name="kategori_id" class="form-control select2" id="simple-select2" required>
+              <optgroup label="Pilih Kategori">
+                <?php while ($kategori = mysqli_fetch_assoc($queryCategory)) : ?>
+                  <option value="<?= $kategori['id'] ?>" <?= (isset($rowEdit['kategori_id']) && $rowEdit['kategori_id'] == $kategori['id']) ? ' selected' : '' ?>>
+                    <?= $kategori['nama_kategori'] ?>
+                  </option>
+                <?php endwhile; ?>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="form-group col-md-8">
+            <label class="form-label">Harga</label>
+            <input type="number" name="harga_jual" class="form-control" required value="<?= $rowEdit['harga_jual'] ?? '' ?>">
+          </div>
+
+          <div class="form-group col-md-8">
+            <label for="simple-select2">Unit</label>
+            <select name="id_unit" class="form-control select2" id="simple-select2" required>
+              <optgroup label="Pilih Unit">
+                <?php $no = 1?>
+                <?php while ($unit = mysqli_fetch_assoc($queryUnit)) : ?>
+                  <option value="<?= $unit['id'] ?>" <?= (isset($rowEdit['id_unit']) && $rowEdit['id_unit'] == $unit['id']) ? ' selected' : '' ?>>
+                   <?= $no . '. ' . $unit['nama_unit'] ?>
+                    <?php $no++?>
+                  </option>
+                <?php endwhile; ?>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="form-group col-md-8">
+            <label for="simple-select2">Stok</label>
+            <input type="number" name="stok" class="form-control" required value="<?= $rowEdit['stok'] ?? '' ?>">
+          </div>
+          <div class="form-group col-md-8">
+            <label for="customFile">Upload Gambar</label>
+            <div class="custom-file">
+              <input name="image" type="file" class="custom-file-input" id="customFile" accept=".jpg,.jpeg,.png" <?= isset($_GET['edit']) ? '' : 'required' ?>>
+              <label class="custom-file-label" for="customFile">Choose file</label>
+              <?php if (!empty($rowEdit['gambar'])): ?>
+                <small class="text-muted">Gambar saat ini: <?= $rowEdit['gambar'] ?></small>
+              <?php endif; ?>
+            </div>
+            <div class="mt-3">
+              <button type="submit" class="btn btn-primary" name="<?= isset($_GET['edit']) ? 'edit' : 'add' ?>">
+                <?= isset($_GET['edit']) ? '' : '' ?><i class="fe fe-save fe-16"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 </div>

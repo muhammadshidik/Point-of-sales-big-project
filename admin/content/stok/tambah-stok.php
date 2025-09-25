@@ -27,7 +27,7 @@ $result = mysqli_query($config, "SELECT * FROM produk");
 <div class="container">
     <div class="card shadow">
         <div class="card-header">
-            <h3><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Stok Barang</h3>
+            <h5><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Stok Barang</h5>
         </div>
         <div class="card-body">
             <form method="POST">
@@ -50,7 +50,7 @@ $result = mysqli_query($config, "SELECT * FROM produk");
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary btn-sm"
                         name="<?php echo isset($_GET['edit']) ? 'edit' : 'add' ?>">
-                        <?php echo isset($_GET['edit']) ? 'Simpan Perubahan' : 'Simpan' ?>
+                        <?php echo isset($_GET['edit']) ? '' : '' ?> <i class="fe fe-save fe-16"></i>
                     </button>
                 </div>
             </form>

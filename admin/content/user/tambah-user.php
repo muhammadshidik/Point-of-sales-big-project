@@ -8,9 +8,9 @@ if (isset($_GET['delete'])) {
 
 
     if ($queryDelete) {
-        header("location:?page=user&hapus=berhasil");
+        header("location:?page=user/user&hapus=berhasil");
     } else {
-        header("location:?page=user&hapus=gagal");
+        header("location:?page=user/user&hapus=gagal");
     }
 }
 $id_user = isset($_GET['edit']) ? $_GET['edit'] : '';
@@ -25,10 +25,10 @@ if (isset($_POST['username'])) {
 
     if (!isset($_GET['edit'])) {
         $insert = mysqli_query($config, "INSERT INTO user (username, email, password) VALUES('$username','$email','$password')");
-        header("location:?page=user&tambah=berhasil");
+        header("location:?page=user/user&tambah=berhasil");
     } else {
-        $Update = mysqli_query($config, "UPDATE user SET username='$name', email='$email', password='$password' WHERE id='$id_user'");
-        header("location:?page=user&ubah=berhasil");
+        $Update = mysqli_query($config, "UPDATE user SET username='$username', email='$email', password='$password' WHERE id='$id_user'");
+        header("location:?page=user/user&ubah=berhasil");
     }
 }
 ?>
@@ -37,7 +37,7 @@ if (isset($_POST['username'])) {
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h3><?= isset($_GET['edit']) ? 'Ubah' : 'Tambah' ?> User </h3>
+                    <h5><?= isset($_GET['edit']) ? 'Ubah' : 'Tambah' ?> User </h5>
                 </div>
                 <div class="card-body">
                     <form action="" method="post">
@@ -57,7 +57,11 @@ if (isset($_POST['username'])) {
                             </small>
                         </div>
                         <div class="mb-3">
-                            <input type="submit" class="btn btn-success" name="save">
+                            <button type="submit" class="btn btn-primary btn-sm"
+                                name="<?php echo isset($_GET['edit']) ? 'edit' : 'add' ?>">
+                                <?php echo isset($_GET['edit']) ? '' : '' ?>
+                                <i class="fe fe-save fe-16"></i>
+                            </button>
                         </div>
                     </form>
                 </div>

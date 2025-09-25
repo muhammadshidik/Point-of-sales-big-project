@@ -1,104 +1,193 @@
-# Skydash - Free Bootstrap Template
+<p align="center">
+   <a href="https://themeselection.com/products/sneat-free-bootstrap-html-admin-template/" target="_blank">
+      <img src="https://user-images.githubusercontent.com/749684/150333149-805037bc-8874-4a1f-876a-61a9683f8ef5.png" alt="sneat-logo" width="30px" height="auto">
+   </a>
+</p>
 
-Skydash is the latest Bootstrap admin template from BootstrapDash. This template has been meticulously crafted to ensure the best possible experience for developers and users alike. This admin template is super easy to set up, modify and use. The clean design minimizes clutter and improves the overall user experience. Skydash is packed with all the features that fit your needs but not cramped with components you would not even use. It is an excellent fit to build admin panels, e-commerce systems, project management systems, CMS or CRM. It comes with a clean and well-commented code that makes it easy to work with the template. Thus making it an ideal pick for jump-starting your project.
+<h1 align="center">
+   <a href="https://themeselection.com/products/sneat-free-bootstrap-html-admin-template/" target="_blank" align="center">
+      Sneat - Free Bootstrap 5 HTML Admin Template
+   </a>
+</h1>
 
-<h1>Demo</h1>
-Click below to check out the live demo.
+<p align="center">Most Powerful & Comprehensive Free Bootstrap 5 HTML Admin Dashboard Template built for developers!</p>
 
-[![N|Solid](preview.jpg)](https://bootstrapdash.com/demo/skydash-free/template/)
+![GitHub](https://img.shields.io/github/license/themeselection/sneat-html-admin-template-free) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/themeselection/sneat-html-admin-template-free) ![GitHub issues](https://img.shields.io/github/issues/themeselection/sneat-html-admin-template-free) ![GitHub closed issues](https://img.shields.io/github/issues-closed/themeselection/sneat-html-admin-template-free) ![Twitter Follow](https://img.shields.io/twitter/follow/Theme_Selection?style=social)
 
+[![Sneat - Bootstrap 5 HTML Admin Template Demo Screenshot](https://user-images.githubusercontent.com/80033712/153581472-452394ee-327a-4d00-a41a-c6e8036b7096.png)](https://themeselection.com/products/sneat-free-bootstrap-html-admin-template/)
 
-#### Credits:
+## Introduction 🚀
 
-- Bootstrap 4
-  
-- Font Awesome
-  
-- jQuery
-  
-- Gulp
-  
-- Chart.js
-  
-- Google Maps
-  
-- Perfect Scrollbar
+If you’re a developer looking for most Powerful & comprehensive [**Free Bootstrap 5 HTML Admin Template**](https://themeselection.com/products/sneat-free-bootstrap-html-admin-template/) built for developers, rich with features, and highly customizable look no further than Sneat. We’ve followed the highest industry standards to bring you the very best admin template that is not only fast and easy to use but highly scalable. Offering ultimate convenience and flexibility, you’ll be able to build whatever application you want with very little hassle.
 
+Build premium quality applications with ease. Use our innovative [bootstrap admin templates](https://themeselection.com/products/category/bootstrap-admin-templates/) to create eye-catching, high-quality WebApps. Your apps will be completely responsive, ensuring they’ll look stunning and function flawlessly on desktops, tablets, and mobile devices.
 
+[View Demo](https://themeselection.com/demo/sneat-bootstrap-html-admin-template-free/html/)
 
-#### Browser Support:
+## Installation ⚒️
+
+Automate time-consuming or repetitive tasks in your development workflow using Gulp 🥤
+
+> Please note, the use of Node, Webpack & Gulp and their advanced settings are totally optional. You can use and customize the template without using them too.
+
+Installing Node & Gulp and running it is super easy in Sneat, please follow these steps and you should be ready to rock 🤘
+
+1. First of all, make sure you have installed [Node](https://nodejs.org/en/) (LTS). If Node.js is already installed in your system, make sure the installed version is `LTS` and jump to step 2
+
+2. Install the Gulp CLI: Open Terminal/Command Prompt and run the following command and wait until it finishes. If you have already installed Gulp CLI, you can skip this step and jump to step 3.
+
+```bash
+npm install --global gulp-cli
+```
+
+3. Navigate to the Sneat root directory and run following command to install our local dependencies listed in `package.json`. You can use `npm` OR `yarn` as per your preference.
+
+> It is recommended to use Yarn
+
+```bash
+# For npm
+npm install --legacy-peer-deps
+
+# For Yarn
+yarn
+```
+
+4. Now, you are ready to run `npm` tasks, below command will start the server and watch the code using [browsersync](https://browsersync.io/). Open [http://localhost:3000/](http://localhost:3000/) to check your development 🚀.
+
+```bash
+# npm
+npm run serve
+
+# yarn
+yarn serve
+```
+
+## Available Tasks 🧑‍💻
+
+Open console/terminal, go to the Sneat root directory and run `npm run {task_name}`.i.e To generate build run `npm run build`.
+
+Run a task with specified environment(development/production) just execute the task with `--env={environment}` option, i.e. `npm run build --env=production`.
+
+> **Tip:** Use `npm run` command to list all predefined npm tasks from `package.json` file.
+
+## What's Included 📦
+
+- Dashboard
+- Layouts
+  - Without menu
+  - Without Navbar
+  - Container
+  - Fluid
+  - Blank
+- Pages
+  - Account Settings
+  - Login
+  - Register
+  - Forgot Password
+  - Error
+  - Under Maintenance
+- Cards
+- User Interface
+  - **All Bootstrap Components**
+- Extended UI
+  - Perfect Scrollbar
+  - Text Divider
+- Boxicon
+- Form Elements
+  - Basic Inputs
+  - Input Groups
+- Form Layout
+  - Vertical Form
+  - Horizontal Form
+- Tables
+
+## What's in Premium Version 💎
+
+| Sneat Free Version                                                                        | Sneat Premium Version                                                                                                            |
+| ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [Demo](https://themeselection.com/demo/sneat-bootstrap-html-admin-template-free/html/)    | [Demo](https://themeselection.com/demo/sneat-bootstrap-html-admin-template/html/vertical-menu-template/)                         |
+| [Download](https://themeselection.com/products/sneat-free-bootstrap-html-admin-template/) | [Purchase](https://themeselection.com/products/sneat-bootstrap-html-admin-template/)                                             |
+| Single vertical Menu                                                                      | Vertical Menu + Horizontal Menu                                                                                                  |
+| Simple Light Style                                                                        | Light & Dark Style                                                                                                               |
+| Default Theme                                                                             | Default, Semi Dark & Bordered Themes                                                                                             |
+| Fixed Layout(Menu)                                                                        | Fixed & Static Layout(Menu)                                                                                                      |
+| 1 Simple Dashboard                                                                        | 3 Niche Dashboards                                                                                                               |
+| -                                                                                         | Multiple Ready to use Application like Calendar, Invoice, Users List, Users View, Roles and Permission etc.                      |
+| Simple From Elements                                                                      | Advance form elements, validation & form wizard                                                                                  |
+| Basic Cards                                                                               | Basic, Advance , Statistics, Analytics, Gamifications and Actions Cards                                                          |
+| Basic User Interface(Components)                                                          | Advance and Custom User Interfaces(Components)                                                                                   |
+| Two Extended Components                                                                   | Twelve Ready to use Extended Components                                                                                          |
+| -                                                                                         | Quick Search - Quickly navigate between pages (w/ hotkey support)                                                                |
+| Basic Pages                                                                               | Authentication Pages in 2 Variants + Ready to use pages like User Profile, Account Settings,FAQ, Help Center, Pricing, Misc etc. |
+| -                                                                                         | 3D Characters + Illustrations                                                                                                    |
+| Basic tables                                                                              | Advanced tables                                                                                                                  |
+| -                                                                                         | Quick customization using theme config file                                                                                      |
+| -                                                                                         | Leaflet Maps                                                                                                                     |
+| 1 Chart Library                                                                           | 2 Chart Libraries                                                                                                                |
+| -                                                                                         | Multiple Navbar & Menu Options                                                                                                   |
+| -                                                                                         | Starter-kit                                                                                                                      |
+| -                                                                                         | Internationalization support                                                                                                     |
+| -                                                                                         | RTL Support                                                                                                                      |
+| Regular Support                                                                           | Priority Support                                                                                                                 |
+| Detailed Documentation                                                                    | Detailed Documentation                                                                                                           |
+
+## Documentation 📜
+
+Check out our live [Documentation](https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/)
+
+## Browser Support 🖥️
+
+At present, we officially aim to support the last two versions of the following browsers:
 
 - Chrome (latest)
-  
 - FireFox (latest)
-  
 - Safari (latest)
-
+- Microsoft Edge (latest)
 - Opera (latest)
 
-- IE10+
+## Useful Links 🎁
 
+- [Freebies](https://themeselection.com/products/category/download-free-admin-templates/)
+- [Download Free Admin Templates](https://themeselection.com/products/category/download-free-admin-templates/)
+- [Bootstrap 5 CheatSheet](https://bootstrap-cheatsheet.themeselection.com/)
 
-#### License Information:
+## Support 👨‍💻
 
-Skydash is released under MIT license. Skydash is a free Bootstrap 4 admin template developed from BootstrapDash. Feel free to download it, use it, share it, get creative with it.
+We use GitHub issues as support tickets to manage Item support.
 
-#### How to use Skydash?
+1. In order to raise the GitHub issue, you must have a github account. [Raise a Issue](https://github.com/themeselection/sneat-html-admin-template-free/issues)
 
--Install node-gyp package. If you don’t know the installation steps, please click [here](https://github.com/nodejs/node-gyp)
+## License ©
 
-- Click the Clone or Download button in GitHub and download as a ZIP file or you can enter the command git clone https://github.com/BootstrapDash/skydash-free-bootstrap-admin-template.git in your terminal to get a copy of this template.
-  
--  After the files have been downloaded you will get a folder with all the required files
+- Copyright © [ThemeSelection](https://themeselection.com/)
+- Licensed under [MIT](https://github.com/themeselection/sneat-html-admin-template-free/blob/master/LICENSE.md)
 
--   Open your terminal (Run as Administrator). You can install all the dependencies in the template by running the command npm install. All the required files are in the node modules. If you didn't run with admin authorities, you can see errors.
-  
-- Find the file named index.html, check what components you need. Open the file in a text editor and you can start editing.
+## Contributing 🦸
 
--  Now that your project has now kick-started, all you need to do now is to code, code, and code to your heart's content.
+Contribution are always welcome and recommended! Here is how:
 
-#### How to Contribute?:
+- Fork the repository ([here is the guide](https://docs.github.com/en/get-started/quickstart/fork-a-repo)).
+- Clone to your machine `git clone https://github.com/YOUR_USERNAME/REPO_URL` Make your changes
+- Create a pull request
 
-We love your contributions and we welcome them wholeheartedly. We believe the more the merrier. To contribute make sure you have Node.js and npm installed. Now run the command gulp --version. If the command returns with the Gulp version number, it means you have Gulp installed. If not you need to run the command npm install --global gulp-cli to install Gulp.
+### Contribution Requirements 🧰
 
+- When you contribute, you agree to give a non-exclusive license to ThemeSelection to use that contribution in any context as we (ThemeSelection) see appropriate.
+- If you use content provided by another party, it must be appropriately licensed using an open source license.
+- Contributions are only accepted through Github pull requests.
+- Finally, contributed code must work in all supported browsers.
 
-#### Next
+## Creators 😇
 
-After Gulp has been installed, follow the steps below to contribute.
+- [ThemeSelection](https://themeselection.com)
 
-- Fork and clone the repo.
-  
-- Run the command npm install to install all the dependencies.
-  
-- Enter the command gulp serve. This will open Skydash in your default browser.
-  
-- Make your valuable contribution.
-  
-- Submit a pull request.
+## Changelog 📆
 
+Please refer to the [CHANGELOG](https://themeselection.com/demo/sneat-bootstrap-html-admin-template-free/changelog.html) file. We will add a detailed release notes to each new release.
 
-### More from BootstrapDash
-Here are some of our most popular templates:
+## Social Media 🌍
 
-- [StarAdmin Free Bootstrap Admin Template](https://github.com/BootstrapDash/StarAdmin-Free-Bootstrap-Admin-Template)
-- [PurpleAdmin Free Admin Template](https://github.com/BootstrapDash/PurpleAdmin-Free-Admin-Template)
-- [MajesticAdmin Free Bootstrap Admin Template](https://github.com/BootstrapDash/MajesticAdmin-Free-Bootstrap-Admin-Template)
-  
-### Like what you see?
-Please leave a star on our GitHub repo.
-Submit bugs and help us improve Corona Angular!
-Find us on 
-- [Twitter](https://twitter.com/bootstrapdash?lang=en), 
-- [Facebook](https://www.facebook.com/bootstrapdash/), 
-- [Instagram](https://www.instagram.com/bootstrapdash/?hl=en),
-- [Behance](https://www.behance.net/bootstrapdash),
-- [Pinterest](https://www.pinterest.com/bootstrapdash/),
-- [Dribbble](https://dribbble.com/bootstrapdash),
-- [LinkedIn](https://in.linkedin.com/in/bootstrapdash)
-
-
-#### Go Premium!!
-
-Do you need a template with more features and functionalities? Get more with our collection of premium templates with more plugins, eye-catching animations, UI components, and sample pages all fitting together with a high-quality design. Visit https://www.bootstrapdash.com for more admin templates.
-
-Check out the premium version of [Skydash Bootstrap admin template](https://www.bootstrapdash.com/product/skydash-admin-template/)
+- Twitter : [https://twitter.com/Theme_Selection](https://twitter.com/Theme_Selection)
+- Facebook : [https://www.facebook.com/ThemeSelections/](https://www.facebook.com/ThemeSelections/)
+- Pinterest : [https://pinterest.com/themeselect/](https://pinterest.com/themeselect/)
+- Instagram : [https://www.instagram.com/themeselection/](https://www.instagram.com/themeselection/)

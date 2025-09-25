@@ -29,19 +29,19 @@ $result = mysqli_query($config, "SELECT * FROM unit");
 <div class="container">
    <div class="card shadow">
     <div class="card-header">
-        <h3><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Unit </h3>
+        <h5><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Unit </h5>
     </div>
     <div class="card-body">
         <form action="" method="post">
             <div class="row">
-                <div class="col-sm-6 mb-3">
+                <div class="col-md-6 mb-3">
                     <label for="" class="form-label">Nama Unit</label>
                     <input type="text" class="form-control" id="" name="nama_unit" placeholder="Masukkan Unit"
                         value="<?= isset($rowEdit['nama_unit']) ? $rowEdit['nama_unit'] : '' ?>" required>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6 mb-3">
+                <div class="col-md-6 mb-3">
                     <label for="" class="form-label">Deskripsi</label>
                    <textarea class="form-control" name="deskripsi" id=""><?= isset($rowEdit['deskripsi']) ? $rowEdit['deskripsi'] : '' ?></textarea>
                 </div>
@@ -49,7 +49,7 @@ $result = mysqli_query($config, "SELECT * FROM unit");
             <div class="">
                 <button type="submit" class="btn btn-primary btn-sm"
                     name="<?php echo isset($_GET['edit']) ? 'edit' : 'add' ?>">
-                    <?php echo isset($_GET['edit']) ? 'Simpan Perubahan' : 'Simpan' ?>
+                    <?php echo isset($_GET['edit']) ? '' : '' ?><i class="fe fe-save fe-16"></i>
                 </button>
             </div>
         </form>

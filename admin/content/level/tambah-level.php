@@ -27,7 +27,7 @@ if (isset($_GET['delete'])) {
 <div class="container">
    <div class="card shadow">
     <div class="card-header">
-        <h3><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Level</h3>
+        <h5><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Level</h5>
     </div>
     <div class="card-body">
         <form action="" method="post">
@@ -41,7 +41,8 @@ if (isset($_GET['delete'])) {
             <div class="">
                 <button type="submit" class="btn btn-primary btn-sm"
                     name="<?php echo isset($_GET['edit']) ? 'edit' : 'add' ?>">
-                    <?php echo isset($_GET['edit']) ? 'Simpan Perubahan' : 'Simpan' ?>
+                    <?php echo isset($_GET['edit']) ? '' : '' ?>
+                    <i class="fe fe-save fe-16"></i>
                 </button>
             </div>
         </form>

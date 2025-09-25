@@ -2,7 +2,7 @@
 include 'admin/controller/koneksi.php';
 
 $queryUnit = mysqli_query($config, "SELECT * FROM unit");
-$rowUnit = mysqli_fetch_all($queryUnit, MYSQLI_ASSOC, );
+$rowUnit = mysqli_fetch_all($queryUnit, MYSQLI_ASSOC,);
 
 ?>
 <div class="container mt-4">
@@ -11,9 +11,7 @@ $rowUnit = mysqli_fetch_all($queryUnit, MYSQLI_ASSOC, );
             <h5>Unit Produk</h5>
         </div>
         <div class="card-body ">
-            <div class='mb-3' align="left" >
-                <a href="?page=unit/tambah-unit" class="btn btn-primary btn-sm"> Tambah Unit</a>
-            </div>
+
             <table class="table table-borderless table-hover">
                 <thead>
                     <tr>
@@ -31,11 +29,15 @@ $rowUnit = mysqli_fetch_all($queryUnit, MYSQLI_ASSOC, );
                             <td><?= $row['nama_unit'] ?></td>
                             <td><?= $row['deskripsi'] ?></td>
                             <td>
-                                <a  href="?page=unit/tambah-unit&edit=<?= $row['id'] ?>"
-                                    class="btn btn-secondary btn-sm">Ubah</a>
-                                <a onclick="return confirm('Are you sure wanna delete this data??')"
-                                   href="?page=unit/unit&delete=<?= $row['id'] ?>"
-                                    class="btn btn-danger btn-sm">Hapus</a>
+                                <div class='button-action'>
+                                    <a href="?page=unit/tambah-unit" class="btn btn-success btn-sm"><i class="fe fe-plus fe-16"></i></a>
+                                    <a href="?page=unit/tambah-unit&edit=<?= $row['id'] ?>"
+                                        class="btn btn-info btn-sm"><i class="fe fe-edit fe-16"></i></a>
+                                    <a onclick="return confirm('Are you sure wanna delete this data??')"
+                                        href="?page=unit/unit&delete=<?= $row['id'] ?>"
+                                        class="btn btn-danger btn-sm"><i class="fe fe-trash fe-16"></i></a>
+                                </div>
+
 
                             </td>
                         </tr>

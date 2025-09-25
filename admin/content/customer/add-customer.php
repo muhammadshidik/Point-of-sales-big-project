@@ -31,7 +31,9 @@ if (isset($_GET['delete'])) {
 }
 ?>
 
-<div class="card shadow">
+
+    <div class="container">
+        <div class="card shadow">
     <div class="card-header">
         <h5><?= isset($_GET['edit']) ? 'Edit' : 'Add' ?> Pelanggan</h5>
     </div>
@@ -41,7 +43,7 @@ if (isset($_GET['delete'])) {
                 <div class="col-sm-6 mb-3">
                     <label for="" class="form-label">Nama Pelanggan</label>
                     <input type="text" class="form-control" id="" name="customer_name" placeholder="Masukkan Nama Pelanggan"
-                        value="<?= isset($_GET['edit']) ? $rowEdit['customer_name'] : '' ?>" required>
+                        value="<?=  isset($_GET['edit']) ? $rowEdit['customer_name'] : '' ?>" required>
                 </div>
                 <div class="col-sm-6 mb-3">
                     <label for="" class="form-label">No. Handpone</label>
@@ -57,9 +59,11 @@ if (isset($_GET['delete'])) {
             <div class="">
                 <button type="submit" class="btn btn-primary btn-sm"
                     name="<?php echo isset($_GET['edit']) ? 'edit' : 'add' ?>">
-                    <?php echo isset($_GET['edit']) ? 'Simpan' : 'Simpan' ?>
+                    <?php echo isset($_GET['edit']) ? '' : '' ?>
+                    <i class="fe fe-save fe-16"></i>
                 </button>
             </div>
         </form>
+    </div>
     </div>
 </div>

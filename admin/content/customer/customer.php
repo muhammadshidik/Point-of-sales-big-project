@@ -9,11 +9,8 @@ $queryData = mysqli_query($config, "SELECT * FROM customer ORDER BY updated_at D
         </div>
         <div class="card-body">
             <?php include 'admin/controller/alert-data-crud.php' ?>
-            <div align="left" class="button-action">
-                <a href="?page=customer/add-customer" class="btn btn-primary btn-sm">Tambah Pelanggan</a>
-            </div>
-              <table class="table table-borderless table-hover  mt-3 datatable">
-                    <thead class="table-dark" >
+            <table class="table table-borderless table-hover datatable">
+                <thead class="table-dark">
                     <tr>
                         <th>No</th>
                         <th>Nama Customer</th>
@@ -32,15 +29,18 @@ $queryData = mysqli_query($config, "SELECT * FROM customer ORDER BY updated_at D
                             <td><?= isset($rowData['phone']) ? $rowData['phone'] : '-' ?></td>
                             <td><?= isset($rowData['address']) ? $rowData['address'] : '-' ?></td>
                             <td>
-                                <a href="?page=customer/add-customer&edit=<?php echo $rowData['id'] ?>">
-                                    <button class="btn btn-success btn-sm">Edit
-                                    </button>
-                                </a>
-                                <a onclick="return confirm ('Apakah anda yakin akan menghapus data ini?')"
-                                    href="?page=customer/add-customer&delete=<?php echo $rowData['id'] ?>">
-                                    <button class="btn btn-danger btn-sm">Hapus
-                                    </button>
-                                </a>
+                                <div align="left" class="button-action">
+                                    <a href="?page=customer/add-customer" class="btn btn-success btn-sm"><i class="fe fe-plus fe-16"></i></a>
+                                    <a href="?page=customer/add-customer&edit=<?php echo $rowData['id'] ?>">
+                                        <button class="btn btn-info btn-sm"><i class="fe fe-edit fe-16"></i>
+                                        </button>
+                                    </a>
+                                    <a onclick="return confirm ('Apakah anda yakin akan menghapus data ini?')"
+                                        href="?page=customer/add-customer&delete=<?php echo $rowData['id'] ?>">
+                                        <button class="btn btn-danger btn-sm"><i class="fe fe-trash fe-16"></i>
+                                        </button>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     <?php endwhile; // End While 
@@ -48,7 +48,7 @@ $queryData = mysqli_query($config, "SELECT * FROM customer ORDER BY updated_at D
                 </tbody>
             </table>
             <div class="mt-4" align="right">
-    
+
             </div>
         </div>
     </div>

@@ -10,11 +10,8 @@ $queryData = mysqli_query($config, "SELECT * FROM level ORDER BY id ASC");
         </div>
         <div class="card-body">
             <?php include 'admin/controller/alert-data-crud.php' ?>
-            <div class="button-action">
-                <a href="?page=level/tambah-level" class="btn btn-primary btn-sm">Tambah Akses</a>
-            </div>
             <table class="table table-borderless table-hover mt-3">
-                <thead class="table-dark">
+                <thead>
                     <tr>
                         <th>No</th>
                         <th>Pemegang Akses</th>
@@ -29,17 +26,21 @@ $queryData = mysqli_query($config, "SELECT * FROM level ORDER BY id ASC");
                             <td><?= $no++ ?></td>
                             <td><?= isset($rowData['level_name']) ? $rowData['level_name'] : '-' ?></td>
                             <td>
-                                <a href="?page=level/tambah-level&edit=<?php echo $rowData['id'] ?>">
-                                    <button class="btn btn-secondary btn-sm">
-                                        Ubah
-                                    </button>
-                                </a>
-                                <a onclick="return confirm ('Apakah anda yakin akan menghapus data ini?')"
-                                    href="?page=level/tambah-level&delete=<?php echo $rowData['id'] ?>">
-                                    <button class="btn btn-danger btn-sm">
-                                      Hapus
-                                    </button>
-                                </a>
+                                <div class="button-action my-3">
+                                    <a href="?page=level/tambah-level" class="btn btn-success btn-sm me-2"> <i class="fe fe-plus fe-16"></i></a>
+                                    <a href="?page=level/tambah-level&edit=<?php echo $rowData['id'] ?>">
+                                        <button class="btn btn-info btn-sm ">
+                                             <i class="fe fe-edit fe-16"></i>
+                                        </button>
+                                    </a>
+                                    <a onclick="return confirm ('Apakah anda yakin akan menghapus data ini?')"
+                                        href="?page=level/tambah-level&delete=<?php echo $rowData['id'] ?>">
+                                        <button class="btn btn-danger btn-sm">
+                                             <i class="fe fe-trash fe-16"></i>
+                                        </button>
+                                    </a>
+                                </div>
+
                             </td>
                         </tr>
                     <?php endwhile; // End While 

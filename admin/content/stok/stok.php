@@ -8,10 +8,10 @@ $result = mysqli_query($config, "SELECT * FROM produk");
             <h5>Laporan Stok</h5>
         </div>
         <div class="card-body ">
-            <div class='mb-3 ' align="left">
-                <a href="?page=stok/tambah-stok" class="btn btn-primary btn-sm">Tambah Barang</a>
-            </div>
             <table class="table table-borderless table-hover">
+                <div class="button-action">
+                    <a href="?page=stok/tambah-stok" class="btn btn-success btn-sm"><i class="fe fe-plus fe-16"></i></a>
+                </div>
                 <thead>
                     <tr>
                         <th>No</th>
@@ -22,12 +22,12 @@ $result = mysqli_query($config, "SELECT * FROM produk");
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
                     $no = 1;
                     while ($row = mysqli_fetch_assoc($result)) :
                         $status = ($row['stok'] <= 5)
-                            ? "<span class='badge bg-danger'><i class='bi bi-exclamation-triangle-fill'></i> Menipis</span>"
-                            : "<span class='badge bg-success'><i class='bi bi-check-circle-fill'></i> Cukup</span>";
+                            ? "<span class='badge badge-pill badge-warning'>Menipis</span>"
+                            : "<span class='badge badge-pill badge-success'>Cukup</span>";
                     ?>
                         <tr>
                             <td><?= $no++ ?></td>
@@ -36,11 +36,13 @@ $result = mysqli_query($config, "SELECT * FROM produk");
 
                             <td><?= $status; ?></td>
                             <td>
-                                <a class="btn btn-secondary btn-sm" href="?page=stok/tambah-stok&edit=<?php echo $row['id'] ?>">Edit
-                                </a>
-                                <a class="btn btn-danger btn-sm " onclick="return confirm ('Apakah anda yakin akan menghapus data ini?')"
-                                    href="?page=stok/tambah-stok&delete=<?php echo $row['id'] ?>">Hapus
-                                </a>
+                                <div class="button-action"> 
+                                    <a class="btn btn-info btn-sm" href="?page=stok/tambah-stok&edit=<?php echo $row['id'] ?>"><i class="fe fe-edit fe-16"></i>
+                                    </a>
+                                    <a class="btn btn-danger btn-sm " onclick="return confirm ('Apakah anda yakin akan menghapus data ini?')"
+                                        href="?page=stok/tambah-stok&delete=<?php echo $row['id'] ?>"><i class="fe fe-trash fe-16"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     <?php endwhile; ?>

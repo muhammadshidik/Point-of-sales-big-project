@@ -15,7 +15,7 @@ $result = mysqli_query($config, $query);
         <div class="card-body">
             <?php include 'admin/controller/alert-data-crud.php'; // Semicolon added 
             ?>
-            <a href="?page=kategori-produk/add-category" class="btn btn-primary mb-3 btn-sm">+ Tambah Kategori</a>
+
 
             <table class="table table-borderless table-hover mt-3 datatable">
                 <thead class="table-dark">
@@ -35,8 +35,13 @@ $result = mysqli_query($config, $query);
                                 <td><?= $no++ ?></td>
                                 <td><?= htmlspecialchars($row['nama_kategori']) ?></td>
                                 <td>
-                                    <a href="?page=kategori-produk/add-category&edit=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm">Edit</a>
-                                    <a href="?page=kategori-produk/add-category&delete=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Yakin hapus menu ini?')">Hapus</a>
+                                    <div class="button-action">
+                                        <a href="?page=kategori-produk/add-category" class="btn btn-success btn-sm"><i class="fe fe-plus fe-16"></i></a>
+                                        <a href="?page=kategori-produk/add-category&edit=<?= $row['id'] ?>" class="btn btn-info btn-sm"><i class="fe fe-edit fe-16"></i></a>
+                                        <a href="?page=kategori-produk/add-category&delete=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus menu ini?')"><i class="fe fe-trash fe-16"></i></a>
+
+                                    </div>
+
                                 </td>
                             </tr>
                         <?php endwhile;

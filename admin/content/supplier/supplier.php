@@ -13,10 +13,10 @@ $rowSupplier = mysqli_fetch_all($querySupplier, MYSQLI_ASSOC);
             <h5>Data Supplier</h5>
         </div>
         <div class="card-body">
-            <div class="mb-3" align="left">
-                <a href="?page=supplier/tambah-supplier" class="btn btn-primary btn-sm">Tambah Supplier</a>
-            </div>
             <table class="table table-borderless table-hover">
+                <div class="button-action">
+                    <a href="?page=supplier/tambah-supplier" class="btn btn-success btn-sm"> <i class="fe fe-plus fe-16"></i></a>
+                </div>
                 <thead>
                     <tr>
                         <th>No</th>
@@ -33,23 +33,25 @@ $rowSupplier = mysqli_fetch_all($querySupplier, MYSQLI_ASSOC);
                         <tr>
                             <td><?php echo $no++; ?></td>
                             <td><?php echo $row['nama_supplier']; ?></td>
-                            <td><?php echo $row['no_telp']; ?></td>
+                            <td><?php echo $row['kontak']; ?></td>
                             <td><?php echo $row['alamat']; ?></td>
                             <td><?php echo $row['email']; ?></td>
                             <td>
-                                <!-- Tombol Ubah -->
-                                <a href="?page=supplier/tambah-supplier&edit=<?php echo $row['id_supplier']; ?>">
-                                    <button class="btn btn-secondary btn-sm">
-                                        Ubah
-                                    </button>
-                                </a>
-                                <!-- Tombol Hapus -->
-                                <a onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
-                                    href="?page=supplier/tambah-supplier&delete=<?php echo $row['id_supplier']; ?>">
-                                    <button class="btn btn-danger btn-sm">
-                                        Hapus
-                                    </button>
-                                </a>
+                                <div class="button-action">
+                                    <!-- Tombol Ubah -->
+                                    <a href="?page=supplier/tambah-supplier&edit=<?php echo $row['id']; ?>">
+                                        <button class="btn btn-info btn-sm">
+                                            <i class="fe fe-edit fe-16"></i>
+                                        </button>
+                                    </a>
+                                    <!-- Tombol Hapus -->
+                                    <a onclick="return confirm('Apakah anda yakin akan menghapus data ini?')"
+                                        href="?page=supplier/tambah-supplier&delete=<?php echo $row['id']; ?>">
+                                        <button class="btn btn-danger btn-sm">
+                                            <i class="fe fe-trash fe-16"></i>
+                                        </button>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>

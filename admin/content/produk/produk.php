@@ -18,14 +18,17 @@ $result = mysqli_query($config, $query);
 <div class="container mt-4">
     <div class="card shadow">
         <div class="card-header">
+            <?php include 'admin/controller/alert-data-crud.php' ?>
             <h5>Data Daftar Produk</h5>
         </div>
         <div class="card-body">
-                <?php include 'admin/controller/alert-data-crud.php'; // Semicolon added 
+            <?php include 'admin/controller/alert-data-crud.php'; // Semicolon added 
             ?>
-            <a href="?page=produk/add-produk" class="btn btn-primary mb-3 btn-sm">Tambah produk</a>
             <!-- table -->
             <table class="table table-borderless table-hover  mt-3 datatable">
+                <div class="button-action">
+                    <a class="btn btn-primary btn-sm" href="?page=produk/add-produk">Tambah produk</a>
+                </div>
                 <thead>
                     <tr>
                         <th>No</th>
@@ -65,6 +68,7 @@ $result = mysqli_query($config, $query);
                                         <span class="text-muted sr-only">Action</span>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="?page=produk/add-produk">Tambah produk</a>
                                         <a class="dropdown-item" href="?page=produk/add-produk&edit=<?= $row['id'] ?>">Edit</a>
                                         <a class="dropdown-item" href="?page=produk/add-produk&delete=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus menu ini?')">Hapus</a>
                                         <a class="dropdown-item" href="#">Detail</a>
@@ -91,27 +95,25 @@ $result = mysqli_query($config, $query);
         </div>
     </div>
 </div>
-  
-    <script>
-      $('#dataTable-1').DataTable(
-      {
+
+<script>
+    $('#dataTable-1').DataTable({
         autoWidth: true,
         "lengthMenu": [
-          [16, 32, 64, -1],
-          [16, 32, 64, "All"]
+            [16, 32, 64, -1],
+            [16, 32, 64, "All"]
         ]
-      });
-    </script>
-    <script src="tmp/js/apps.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
+    });
+</script>
+<script src="tmp/js/apps.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
 
-      function gtag()
-      {
+    function gtag() {
         dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'UA-56159088-1');
-    </script>
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-56159088-1');
+</script>

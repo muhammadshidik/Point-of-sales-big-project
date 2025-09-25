@@ -58,7 +58,7 @@ function getOrderStatus($status_code)
         case 0:
             return '<span class="badge">Diterima </span>';
         case 1:
-            return '<span class="badge"Ditolak</span>';
+            return '<span class="badge">Ditolak</span>';
         default:
             return '<span class="badge">Tidak Diketahui</span>';
     }
@@ -68,14 +68,37 @@ function getStatusList($status_code)
 {
     switch ($status_code) {
         case 0:
-            return '<span class="badge">Tersedia</span>';
+            return '<span class="badge">Ya</span>';
         case 1:
-            return '<span class="badge">Barang Kosong</span>';
+            return '<span class="badge">Tidak</span>';
         default:
-            return '<span class="badge">Pending</span>';
+            return '<span class="badge">Tidak diketahui</span>';
     }
 }
 
+function status($status_code)
+{
+    switch ($status_code) {
+        case 0:
+            return '<span class="badge">Aktif</span>';
+        case 1:
+            return '<span class="badge">Tidak Aktif</span>';
+        default:
+            return '<span class="badge">Tidak diketahui</span>';
+    }
+}
+
+function karyawan($status_code)
+{
+    switch ($status_code) {
+        case 0:
+            return '<span class="badge">Aktif</span>';
+        case 1:
+            return '<span class="badge">Resign</span>';
+        default:
+            return '<span class="badge">Tidak diketahui</span>';
+    }
+}
 function pembayaran($status_code)
 {
     switch ($status_code) {
@@ -87,5 +110,21 @@ function pembayaran($status_code)
             return '<span class="badge">Tunai</span>';
         default:
             return '<span class="badge">Tidak Diketahui</span>';
+    }
+}
+
+function utang($status_code)
+{
+    switch ($status_code) {
+        case 0:
+            return '<span class="badge badge-pill badge-danger">Belom Bayar</span>';
+        case 1:
+            return '<span class="badge badge-pill badge-warning">Bayar Sebagian</span>';
+        case 2:
+            return '<span class="badge badge-pill badge-success">Lunas</span>';
+        case 3:
+            return '<span class="badge badge-pill badge-primary">Kelebihan dana</span>';
+        default:
+            return '<span class="bg bg-secondary">Tidak Diketahui</span>';
     }
 }
