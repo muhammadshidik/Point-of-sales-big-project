@@ -33,7 +33,7 @@ else if (isset($_GET['edit'])) {
     $produk     = $_POST['produk'];
     $id_supplier = $_POST['id_supplier'];
     $id_karyawan = $_POST['id_karyawan'];
-    $total      = $_POST['total'];
+    $total      = isset($_POST['total']) ? array_sum($_POST['total']) : 0;
     $status     = $_POST['status'];
     $tempo      = $_POST['tempo'];
     $pembayaran = $_POST['pembayaran'];
@@ -166,7 +166,7 @@ $rowEdit = $rowEdit ?? null; // default
                 <select name="produk" id="id_product" class="form-control select2">
                   <optgroup label="Pilih Kategori">
                     <?php foreach ($rowProducts as $rowProduct): ?>
-                      <option data-price="<?php echo $rowProduct['nama_produk'] ?>" value="<?php echo $rowProduct['id'] ?>">
+                      <option value="<?php echo $rowProduct['nama_produk'] ?>">
                         <?php echo $rowProduct['nama_produk'] ?>
                       </option>
                     <?php endforeach ?>
@@ -211,15 +211,16 @@ $rowEdit = $rowEdit ?? null; // default
                 <label>Terima Barang</label>
                 <select name="status" class="form-control select2" id="simple-select2" required>
                   <optgroup label="Pilih status">
-                    <option value="0" <?= (isset($rowEdit['status']) && $rowEdit['status'] == 0) ? ' selected' : '' ?>>
-                      <?= getOrderStatus(0) ?>
+                    <option value="Diterima" <?= getOrderStatus(isset($rowEdit['status']) && $rowEdit['status'] == "Diterima") ? ' selected' : '' ?>>
+                      Diterima
                     </option>
-                    <option value="1" <?= (isset($rowEdit['status']) && $rowEdit['status'] == 1) ? ' selected' : '' ?>>
-                      <?= getOrderStatus(1) ?>
+                    <option value="Ditolak" <?= getOrderStatus(isset($rowEdit['status']) && $rowEdit['status'] == "Ditolak") ? ' selected' : '' ?>>
+                      Ditolak
                     </option>
                   </optgroup>
                 </select>
               </div>
+
 
               <div class="mb-3">
                 <label>Penerima Barang</label>
@@ -237,7 +238,7 @@ $rowEdit = $rowEdit ?? null; // default
               <div class="mb-3">
                 <label>Pembayaran</label>
                 <div align="left" class="mb-3">
-                  <button type="button" class="btn btn-success btn-sm addRow" id="addRow"> 
+                  <button type="button" class="btn btn-success btn-sm addRow" id="addRow">
                     <i class="fe fe-plus fe-16"></i>
                   </button>
                 </div>
@@ -255,7 +256,7 @@ $rowEdit = $rowEdit ?? null; // default
           <button type="submit" class="btn btn-primary" name="<?= isset($_GET['edit']) ? 'edit' : 'add' ?>">
             <i class="fe fe-save fe-16"></i>
           </button>
-          <a href="?page=daftar-pembelian" class="btn btn-secondary"> 
+          <a href="?page=daftar-pembelian" class="btn btn-secondary">
             <i class="fe fe-arrow-left fe-16"></i>
           </a>
 
@@ -267,16 +268,16 @@ $rowEdit = $rowEdit ?? null; // default
 </div>
 
 
-  <script>
-    const button = document.querySelector('.addRow');
-    const container = document.querySelector('#paymentContainer');
+<script>
+  const button = document.querySelector('.addRow');
+  const container = document.querySelector('#paymentContainer');
 
-    let no = 1;
+  let no = 1;
 
-    button.addEventListener("click", function() {
-      const wrapper = document.createElement('div');
-      wrapper.classList.add("payment-row", "border", "p-3", "mb-2", "rounded");
-      wrapper.innerHTML = `
+  button.addEventListener("click", function() {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add("payment-row", "border", "p-3", "mb-2", "rounded");
+    wrapper.innerHTML = `
         <div class="d-flex justify-content-between align-items-center mb-2">
           <strong>Pembayaran ${no}</strong>
           <button type="button" class="btn btn-danger btn-sm removeRow">Hapus</button>
@@ -284,9 +285,9 @@ $rowEdit = $rowEdit ?? null; // default
         <div class="mb-2">
           <select name="pembayaran[]" class="form-control" required>
             <optgroup label="Pilih pembayaran">
-              <option value="0"> <?= pembayaran(0) ?> </option>
-              <option value="1"> <?= pembayaran(1) ?> </option>
-              <option value="2"> <?= pembayaran(2) ?> </option>
+              <option value="Tempo"> <?= pembayaran("Tempo") ?> </option>
+              <option value="Transfer"> <?= pembayaran("Transfer") ?> </option>
+              <option value="Tunai"> <?= pembayaran("Tunai") ?> </option>
             </optgroup>
           </select>
         </div>
@@ -297,14 +298,14 @@ $rowEdit = $rowEdit ?? null; // default
           <input type="text" name="referensi[]" class="form-control" placeholder="Referensi Pembayaran">
         </div>
     `;
-      container.appendChild(wrapper);
-      no++;
-    });
+    container.appendChild(wrapper);
+    no++;
+  });
 
-    // hapus row
-    container.addEventListener('click', function(e) {
-      if (e.target.classList.contains('removeRow')) {
-        e.target.closest(".payment-row").remove();
-      }
-    });
-  </script>
+  // hapus row
+  container.addEventListener('click', function(e) {
+    if (e.target.classList.contains('removeRow')) {
+      e.target.closest(".payment-row").remove();
+    }
+  });
+</script>

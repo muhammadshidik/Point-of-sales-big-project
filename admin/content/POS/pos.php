@@ -17,10 +17,9 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
 if (isset($_GET['delete'])) {
     $idDel = $_GET['delete'];
-
     $del = mysqli_query($config, "DELETE FROM transactions WHERE id = '$idDel'");
     if ($del) {
-        header("location:?page=POS/pos");
+        header("location:?page=POS/pos&delete=berhasil");
         exit();
     }
 }
@@ -68,8 +67,9 @@ if (isset($_POST['save'])) {
     $id_user = $_POST['id_user'];
     $id_customer = $_POST['id_customer'];
     $grand_total = $_POST['grand_total'];
-
-    $insTransaction = mysqli_query($config, "INSERT INTO transactions (id_user, id_customer, no_transaction, sub_total) VALUES ('$id_user','$id_customer', '$no_transaction', '$grand_total')");
+    $pembayaran = $_POST['pembayaran'];
+    $status = $_POST['status'];
+    $insTransaction = mysqli_query($config, "INSERT INTO transactions (id_user, id_customer, no_transaction, sub_total, pembayaran, status ) VALUES ('$id_user','$id_customer', '$no_transaction', '$grand_total', '$pembayaran' , '$status')");
 
 
     if ($insTransaction) {
@@ -160,10 +160,7 @@ if (isset($_POST['save'])) {
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="">Kode Transaksi </label>
-                                                <input value="<?= $no_transaction ?>"
-                                                    type="text" class="form-control"
-                                                    readonly
-                                                    name="no_transaction">
+                                                <input value="<?= $no_transaction ?>" type="text" class="form-control" readonly name="no_transaction">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -181,6 +178,7 @@ if (isset($_POST['save'])) {
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="mb-3">
@@ -196,118 +194,158 @@ if (isset($_POST['save'])) {
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="">Nama Kasir </label>
-                                                <input value="<?= $_SESSION['username'] ?>"
-                                                    type="text" class="form-control"
-                                                    readonly>
+                                                <input value="<?= $_SESSION['username'] ?>" type="text" class="form-control" readonly>
                                                 <input type="hidden" name="id_user" value="<?= $_SESSION['id'] ?>">
                                             </div>
                                         </div>
+
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="">Tanggal Transaksi </label>
-                                                <input value="<?= date('Y-m-d') ?>"
-                                                    type="date" class="form-control"
-                                                    readonly>
-                                                <input type="hidden" name="tanggal" value="<?= $_SESSION['id'] ?>">
+                                                <input value="<?= date('Y-m-d') ?>" type="date" class="form-control" readonly>
+                                                <input type="hidden" name="tanggal" value="<?= date('Y-m-d') ?>">
                                             </div>
                                         </div>
+
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label>Metode Pembayaran</label>
-                                                <select name="status" class="form-control select2" id="simple-select2" required>
-                                                    <optgroup label="Pilih status">
-                                                        <option value="0" <?= (isset($rowEdit['status']) && $rowEdit['status'] == 0) ? ' selected' : '' ?>>
-                                                            <?= pembayaran(0) ?>
-                                                        </option>
-                                                        <option value="1" <?= (isset($rowEdit['status']) && $rowEdit['status'] == 1) ? ' selected' : '' ?>>
-                                                            <?= pembayaran(1) ?>
-                                                        </option>
+                                                <select name="pembayaran" class="form-control select2" id="simple-select2" required>
+                                                    <optgroup label="Pilih Metode Pembayaran">
+                                                        <option value="cash" <?= (isset($rowEdit['pembayaran']) && $rowEdit['pembayaran'] == "cash") ? ' selected' : '' ?>><?= metodePembayaran("cash") ?></option>
+                                                        <option value="card" <?= (isset($rowEdit['pembayaran']) && $rowEdit['pembayaran'] == "card") ? ' selected' : '' ?>><?= metodePembayaran("card") ?></option>
+                                                        <option value="transfer" <?= (isset($rowEdit['pembayaran']) && $rowEdit['pembayaran'] == "transfer") ? ' selected' : '' ?>><?= metodePembayaran("transfer") ?></option>
+                                                        <option value="ewallet" <?= (isset($rowEdit['pembayaran']) && $rowEdit['pembayaran'] == "ewallet") ? ' selected' : '' ?>><?= metodePembayaran("ewallet") ?></option>
+                                                        <option value="qris" <?= (isset($rowEdit['pembayaran']) && $rowEdit['pembayaran'] == "qris") ? ' selected' : '' ?>><?= metodePembayaran("qris") ?></option>
+                                                        <option value="tempo" <?= (isset($rowEdit['pembayaran']) && $rowEdit['pembayaran'] == "tempo") ? ' selected' : '' ?>><?= metodePembayaran("tempo") ?></option>
+                                                        <option value="gateway" <?= (isset($rowEdit['pembayaran']) && $rowEdit['pembayaran'] == "gateway") ? ' selected' : '' ?>><?= metodePembayaran("gateway") ?></option>
                                                     </optgroup>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label>Status Transaksi</label>
+                                                <select name="status" class="form-control" required>
+                                                    <option value="selesai" <?= (isset($rowEdit['status']) && $rowEdit['status'] == 'selesai') ? 'selected' : '' ?>>Selesai</option>
+                                                    <option value="pending" <?= (isset($rowEdit['status']) && $rowEdit['status'] == 'pending') ? 'selected' : '' ?>>Pending</option>
+                                                    <option value="batal" <?= (isset($rowEdit['status']) && $rowEdit['status'] == 'batal') ? 'selected' : '' ?>>Batal</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
-                            </div>
+<hr>
+                                    <div align="right" class="mb-3">
+                                        <button type="button" class="btn btn-success addRow" id="addRow"><i class="fe fe-plus fe-16"></i></button>
+                                    </div>
 
-                            <div align="right" class="mb-3">
-                                <button type="button" class="btn btn-success addRow" id="addRow"><i class="fe fe-plus fe-16"></i> </button>
-                            </div>
-                            <table class="table table-borderless table-hover  mt-3 datatable" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Produk</th>
-                                        <th>Qty</th>
-                                        <th>Total</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                            <br>
+                                    <table class="table table-borderless table-hover mt-3 datatable" id="myTable">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Nama Produk</th>
+                                                <th>Qty</th>
+                                                <th>Total</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
 
-                            <p><strong>Total : Rp. <span id="grandTotal"></span></strong></p>
-                            <input type="hidden" name="grand_total" id="grandTotalInput" value="0">
+                                    <br>
+                                    <p><strong>Total : Rp. <span id="grandTotal"></span></strong></p>
+                                    <input type="hidden" name="grand_total" id="grandTotalInput" value="0">
 
-                            <div class="mb-3">
-                                <label for="uangBayar" class="form-label">Uang Bayar</label>
-                                <input type="number" id="uangBayar" class="form-control" placeholder="Masukkan uang pembayaran">
-                            </div>
+                                    <hr>
+                                    <div class="mb-3">
+                                        <label for="uangBayar" class="form-label">Uang Bayar</label>
+                                        <input type="number" id="uangBayar" class="form-control" placeholder="Masukkan uang pembayaran">
+                                    </div>
 
-                            <div class="mb-3">
-                                <label for="kembalian" class="form-label">Kembalian</label>
-                                <input type="text" id="kembalian" class="form-control" readonly>
-                            </div>
+                                    <div class="mb-3">
+                                        <label for="kembalian" class="form-label">Kembalian</label>
+                                        <input type="text" id="kembalian" class="form-control" readonly>
+                                    </div>
 
-                            <div class="mb-3">
-                                <button type="submit" class="btn btn-primary btn-sm" name="save" value=""><i class="fe fe-save fe-16"></i></button>
-                            </div>
-                            </form>
+                                    <div class="mb-3" align="left">
+                                        <button type="button" class="btn btn-dark btn-sm mr-2" data-toggle="modal" data-target="#varyModal" data-whatever="@mdo">Bayar</button>
+                                        <button type="submit" class="btn btn-primary btn-sm" name="save"><i class="fe fe-save fe-16"></i></button>
+                                    </div>
+                                </form>
+                            </div> <!-- end card-body -->
+                        </div> <!-- end modal-body -->
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn mb-2 btn-secondary btn-sm" data-dismiss="modal"><i class="fe fe-arrow-left fe-16"></i></button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn mb-2 btn-secondary btn-sm" data-dismiss="modal"><i class="fe fe-arrow-left fe-16"></i></button>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 
-<script>
-    // var, let, const, var: ketika nilainya tidak ada tidak error, kalo let harus mempunyai nilai
-    // const: nilainya tidak boleh berubah
-    // const nama = "bambang";
-    // nama = "reza";
-    // const button = document.getElementById('addRow');
-    // const button = document.getElementsByClassName('addRow');
-    const button = document.querySelector('.addRow');
-    const tbody = document.querySelector('#myTable tbody');
-    const select = document.querySelector('#id_product');
-    // button.textContent = "Duarr";
-    // button.style.color = "red";
-    const grandTotal = document.getElementById('grandTotal');
-    const grandTotalInput = document.getElementById('grandTotalInput');
+    <div class="modal fade" id="varyModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="varyModalLabel">New message</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <form>
+                                <div class="form-group">
+                                  <label for="recipient-name" class="col-form-label">Recipient:</label>
+                                  <input type="text" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="form-group">
+                                  <label for="message-text" class="col-form-label">Message:</label>
+                                  <textarea class="form-control" id="message-text"></textarea>
+                                </div>
+                              </form>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn mb-2 btn-primary">Send message</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-    let no = 1;
-    button.addEventListener("click", function() {
+    <script>
+        // var, let, const, var: ketika nilainya tidak ada tidak error, kalo let harus mempunyai nilai
+        // const: nilainya tidak boleh berubah
+        // const nama = "bambang";
+        // nama = "reza";
+        // const button = document.getElementById('addRow');
+        // const button = document.getElementsByClassName('addRow');
+        const button = document.querySelector('.addRow');
+        const tbody = document.querySelector('#myTable tbody');
+        const select = document.querySelector('#id_product');
+        // button.textContent = "Duarr";
+        // button.style.color = "red";
+        const grandTotal = document.getElementById('grandTotal');
+        const grandTotalInput = document.getElementById('grandTotalInput');
 
-        const selectedProduct = select.options[select.selectedIndex];
-        const productValue = selectedProduct.value;
-        if (!productValue) {
-            alert('Mohon diisi terlebih dahulu!');
-            return;
-        }
-        const productName = selectedProduct.textContent;
-        const productPrice = selectedProduct.dataset.price;
+        let no = 1;
+        button.addEventListener("click", function() {
 
-        const tr = document.createElement('tr'); //<tr></tr>
-        tr.innerHTML = `
+            const selectedProduct = select.options[select.selectedIndex];
+            const productValue = selectedProduct.value;
+            if (!productValue) {
+                alert('Mohon diisi terlebih dahulu!');
+                return;
+            }
+            const productName = selectedProduct.textContent;
+            const productPrice = selectedProduct.dataset.price;
+
+            const tr = document.createElement('tr'); //<tr></tr>
+            tr.innerHTML = `
         <td>${no}</td>
         <td><input type='hidden' name='id_product[]' class='id_products'>${productName}</td>
         <td>
@@ -320,70 +358,70 @@ if (isset($_POST['save'])) {
         </td>
         `; //<tr><td></td></tr>
 
-        tbody.appendChild(tr);
-        no++;
-        select.value = ""; //untuk mengarahkan kembali ke option
+            tbody.appendChild(tr);
+            no++;
+            select.value = ""; //untuk mengarahkan kembali ke option
 
-        updateGrandTotal();
-
-    });
-
-    tbody.addEventListener('click', function(e) { //e: callback
-        if (e.target.classList.contains('removeRow')) {
-            e.target.closest("tr").remove();
-        }
-
-        updateNumber();
-        updateGrandTotal();
-    });
-
-    tbody.addEventListener('input', function(e) {
-        if (e.target.classList.contains('qtys')) {
-            const row = e.target.closest("tr");
-            const qty = parseInt(e.target.value) || 0;
-
-            const price = parseInt(row.querySelector('[name="price[]"]').value);
-            // const price = 10000;
-            row.querySelector('.totalText').textContent = price * qty;
-            row.querySelector('.totals').value = price * qty;
-            // console.log(price);
             updateGrandTotal();
 
-        }
-    });
-
-    function updateNumber() {
-        const rows = tbody.querySelectorAll("tr");
-
-        rows.forEach(function(row, index) {
-            row.cells[0].textContent = index + 1;
         });
 
-        no = rows.length + 1;
-    }
+        tbody.addEventListener('click', function(e) { //e: callback
+            if (e.target.classList.contains('removeRow')) {
+                e.target.closest("tr").remove();
+            }
 
-    function updateGrandTotal() {
-        const totalCells = tbody.querySelectorAll('.totals');
-        let grand = 0;
-        totalCells.forEach(function(input) {
-            grand += parseInt(input.value) || 0;
+            updateNumber();
+            updateGrandTotal();
         });
-        grandTotal.textContent = grand.toLocaleString('id-ID');
-        grandTotalInput.value = grand;
-    }
-    // Hitung kembalian otomatis
-    const uangBayar = document.getElementById('uangBayar');
-    const kembalian = document.getElementById('kembalian');
 
-    uangBayar.addEventListener('input', function() {
-        const bayar = parseInt(this.value) || 0;
-        const total = parseInt(grandTotalInput.value) || 0;
-        const kembali = bayar - total;
+        tbody.addEventListener('input', function(e) {
+            if (e.target.classList.contains('qtys')) {
+                const row = e.target.closest("tr");
+                const qty = parseInt(e.target.value) || 0;
 
-        if (kembali >= 0) {
-            kembalian.value = kembali.toLocaleString('id-ID');
-        } else {
-            kembalian.value = "Uang kurang";
+                const price = parseInt(row.querySelector('[name="price[]"]').value);
+                // const price = 10000;
+                row.querySelector('.totalText').textContent = price * qty;
+                row.querySelector('.totals').value = price * qty;
+                // console.log(price);
+                updateGrandTotal();
+
+            }
+        });
+
+        function updateNumber() {
+            const rows = tbody.querySelectorAll("tr");
+
+            rows.forEach(function(row, index) {
+                row.cells[0].textContent = index + 1;
+            });
+
+            no = rows.length + 1;
         }
-    });
-</script>
+
+        function updateGrandTotal() {
+            const totalCells = tbody.querySelectorAll('.totals');
+            let grand = 0;
+            totalCells.forEach(function(input) {
+                grand += parseInt(input.value) || 0;
+            });
+            grandTotal.textContent = grand.toLocaleString('id-ID');
+            grandTotalInput.value = grand;
+        }
+        // Hitung kembalian otomatis
+        const uangBayar = document.getElementById('uangBayar');
+        const kembalian = document.getElementById('kembalian');
+
+        uangBayar.addEventListener('input', function() {
+            const bayar = parseInt(this.value) || 0;
+            const total = parseInt(grandTotalInput.value) || 0;
+            const kembali = bayar - total;
+
+            if (kembali >= 0) {
+                kembalian.value = kembali.toLocaleString('id-ID');
+            } else {
+                kembalian.value = "Uang kurang";
+            }
+        });
+    </script>

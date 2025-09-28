@@ -172,7 +172,7 @@ $result = mysqli_query($config, $query);
         <div class="card-body">
             <h5 class="card-title"><?= $rowProduk['nama_produk']; ?></h5>
             <p class="card-text">Rp <?= number_format($rowProduk['harga_jual'], 0, ',', '.'); ?>,-</p>
-            <button onclick="window.open('?page=detail&id=<?= $rowProduk['id']; ?>')" class="btn btn-warning">Detail</button>
+            <button onclick="window.open('?page=menu-produk/detail&id=<?= $rowProduk['id']; ?>')" class="btn btn-warning">Detail</button>
             <a href="#" class="btn btn-danger">Beli</a>
         </div>
     </div>

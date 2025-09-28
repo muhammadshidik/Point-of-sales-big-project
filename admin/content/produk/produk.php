@@ -18,7 +18,6 @@ $result = mysqli_query($config, $query);
 <div class="container mt-4">
     <div class="card shadow">
         <div class="card-header">
-            <?php include 'admin/controller/alert-data-crud.php' ?>
             <h5>Data Daftar Produk</h5>
         </div>
         <div class="card-body">

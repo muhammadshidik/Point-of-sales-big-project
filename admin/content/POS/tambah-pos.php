@@ -11,6 +11,7 @@ if (isset($_GET['delete'])) {
     }
 }
 
+
 $queryUser = mysqli_query($config, "SELECT * FROM user ORDER BY id DESC");
 $rowUser = mysqli_fetch_all($queryUser, MYSQLI_ASSOC);
 

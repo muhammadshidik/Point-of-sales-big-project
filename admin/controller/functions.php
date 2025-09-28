@@ -52,27 +52,25 @@ function loginValidation()
 // ===============================================================
 // PASTE FUNGSI LENGKAP INI DI DALAM FILE koneksi.php ANDA
 // ===============================================================
-function getOrderStatus($status_code)
-{
-    switch ($status_code) {
-        case 0:
-            return '<span class="badge">Diterima </span>';
-        case 1:
-            return '<span class="badge">Ditolak</span>';
-        default:
-            return '<span class="badge">Tidak Diketahui</span>';
+function getOrderStatus($status_text) {
+    switch ($status_text) {
+        case "Diterima": 
+            return '<span class="badge badge-pill bg-success">Diterima</span>';
+        case "Ditolak": 
+            return '<span class="badge badge-pill bg-danger">Ditolak</span>';
+        default: 
+        return '<span class="badge badge-pill bg-secondary">Tidak Diketahui</span>';
     }
 }
-
 function getStatusList($status_code)
 {
     switch ($status_code) {
         case 0:
-            return '<span class="badge">Ya</span>';
+            return '<span class="badge badge-pill bg-success">Ya</span>';
         case 1:
-            return '<span class="badge">Tidak</span>';
+            return '<span class="badge badge-pill bg-danger">Tidak</span>';
         default:
-            return '<span class="badge">Tidak diketahui</span>';
+            return '<span class="badge badge-pill bg-secondary">Tidak diketahui</span>';
     }
 }
 
@@ -80,11 +78,11 @@ function status($status_code)
 {
     switch ($status_code) {
         case 0:
-            return '<span class="badge">Aktif</span>';
+            return '<span class="badge badge-pill bg-success">Aktif</span>';
         case 1:
-            return '<span class="badge">Tidak Aktif</span>';
+            return '<span class="badge badge-pill bg-danger">Tidak Aktif</span>';
         default:
-            return '<span class="badge">Tidak diketahui</span>';
+            return '<span class="badge badge-pill bg-secondary">Tidak diketahui</span>';
     }
 }
 
@@ -92,24 +90,24 @@ function karyawan($status_code)
 {
     switch ($status_code) {
         case 0:
-            return '<span class="badge">Aktif</span>';
+            return '<span class="badge badge-pill bg-success">Aktif</span>';
         case 1:
-            return '<span class="badge">Resign</span>';
+            return '<span class="badge badge-pill bg-Danger">Resign</span>';
         default:
-            return '<span class="badge">Tidak diketahui</span>';
+            return '<span class="badge badge-pill bg-secondary">Tidak diketahui</span>';
     }
 }
 function pembayaran($status_code)
 {
     switch ($status_code) {
-        case 0:
-            return '<span class="badge">Tempo</span>';
-        case 1:
-            return '<span class="badge">Transfer</span>';
-        case 2:
-            return '<span class="badge">Tunai</span>';
+        case "Tempo":
+            return '<span class="badge badge-pill bg-success">Tempo</span>';
+        case "Transfer":
+            return '<span class="badge badge-pill bg-success">Transfer</span>';
+        case "Tunai":
+            return '<span class="badge badge-pill bg-success">Tunai</span>';
         default:
-            return '<span class="badge">Tidak Diketahui</span>';
+            return '<span class="badge badge-pill bg-success">Tidak Diketahui</span>';
     }
 }
 
@@ -126,5 +124,41 @@ function utang($status_code)
             return '<span class="badge badge-pill badge-primary">Kelebihan dana</span>';
         default:
             return '<span class="bg bg-secondary">Tidak Diketahui</span>';
+    }
+}
+
+function metodePembayaran($status_code)
+{
+    switch ($status_code) {
+        case 'cash':
+            return '<span class="badge badge-pill badge-success">Tunai (Cash)</span>';
+        case 'card':
+            return '<span class="badge badge-pill badge-primary">Kartu (Debit/Kredit)</span>';
+        case 'transfer':
+            return '<span class="badge badge-pill badge-info">Transfer Bank</span>';
+        case 'ewallet':
+            return '<span class="badge badge-pill badge-warning">E-Wallet / Dompet Digital</span>';
+        case 'qris':
+            return '<span class="badge badge-pill badge-secondary">QRIS</span>';
+        case 'tempo':
+            return '<span class="badge badge-pill badge-danger">Tempo / Cicilan</span>';
+        case 'gateway':
+            return '<span class="badge badge-pill badge-dark">Online Payment Gateway</span>';
+        default:
+            return '<span class="badge badge-pill badge-light">Tidak Diketahui</span>';
+    }
+}
+
+function statusTransaksi($status)
+{
+    switch ($status) {
+        case 'selesai':
+            return '<span class="badge badge-success">Selesai</span>';
+        case 'pending':
+            return '<span class="badge badge-warning">Pending</span>';
+        case 'batal':
+            return '<span class="badge badge-danger">Batal</span>';
+        default:
+            return '<span class="badge badge-secondary">Tidak Diketahui</span>';
     }
 }

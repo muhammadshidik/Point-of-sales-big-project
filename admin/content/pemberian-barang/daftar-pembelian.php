@@ -63,7 +63,6 @@ if (isset($_GET['delete'])) {
                                 <td><?= $status ?></td>
                                 <td>
                                     <div class="button-action">
-                                        <a href="?page=pemberian-barang/add-pembelian" class="btn btn-success btn-sm"><i class="fe fe-plus fe-16"></i></a>
                                         <!-- Tombol Ubah -->
                                         <a href="?page=pemberian-barang/add-pembelian&edit=<?= $row['id']; ?>">
                                             <button class="btn btn-info btn-sm">

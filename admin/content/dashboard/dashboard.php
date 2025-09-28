@@ -24,26 +24,36 @@ $queryCustomer = mysqli_query($config, "SELECT COUNT(*) as total_customer FROM c
 $rowCustomer = mysqli_fetch_assoc($queryCustomer);
 $totalCustomer = $rowCustomer['total_customer'] ?? 0;
 
-$queryPendapatan = mysqli_query($config, "
-  SELECT 
-    MONTH(created_at) as bulan,
-    SUM(sub_total) as total_pendapatan
+//Pendapatan Bulanan 
+$bulanIni = date('m');
+$tahunIni = date('Y');
+
+$queryBulan = mysqli_query($config, "
+  SELECT SUM(sub_total) as total_pendapatan
   FROM transactions
-  WHERE YEAR(created_at) = 2025
-  GROUP BY MONTH(created_at)
-  ORDER BY bulan ASC
+  WHERE MONTH(created_at) = '$bulanIni'
+    AND YEAR(created_at) = '$tahunIni'
 ");
 
-$pendapatanPerBulan = [];
-while ($row = mysqli_fetch_assoc($queryPendapatan)) {
-  $pendapatanPerBulan[$row['bulan']] = $row['total_pendapatan'];
-}
+$rowBulan = mysqli_fetch_assoc($queryBulan);
+$totalPendapatanBulan = $rowBulan['total_pendapatan'] ?? 0;
+
+//Pendapatan Pertahun 
+$queryTotal = mysqli_query($config, "
+  SELECT SUM(sub_total) as total_pendapatan
+  FROM transactions
+  WHERE YEAR(created_at) = 2025
+");
+
+$rowTotal = mysqli_fetch_assoc($queryTotal);
+$totalPendapatan = $rowTotal['total_pendapatan'] ?? 0;
 
 
+//Pendapatan Harian
 $queryPendapatan = mysqli_query($config, "
   SELECT 
     DATE(t.created_at) as tanggal,
-    c.customer_name, t.no_transaction, t.status,
+    c.customer_name, t.no_transaction, t.status,t.pembayaran,
     SUM(t.sub_total) as total_pendapatan
   FROM transactions t
   LEFT JOIN customer c ON t.id_customer = c.id
@@ -54,9 +64,75 @@ $queryPendapatan = mysqli_query($config, "
 
 $rows = [];
 while ($row = mysqli_fetch_assoc($queryPendapatan)) {
-    $rows[] = $row;
+  $rows[] = $row;
 }
+
+//Total Order
+$queryOrder = mysqli_query($config, "SELECT COUNT(*) as total_order FROM transactions");
+$rowOrder = mysqli_fetch_assoc($queryOrder);
+$totalOrder = $rowOrder['total_order'] ?? 0;
+
+// Ambil jumlah order per bulan
+$queryOrderPerBulan = mysqli_query($config, "
+  SELECT 
+    MONTH(created_at) as bulan,
+    COUNT(*) as total_order
+  FROM transactions
+  WHERE YEAR(created_at) = '$tahunIni'
+  GROUP BY MONTH(created_at)
+  ORDER BY bulan ASC
+");
+
+$bulanLabels = [];
+$totalOrderPerBulan = [];
+while ($row = mysqli_fetch_assoc($queryOrderPerBulan)) {
+  $bulanLabels[$row['bulan']] = date('F', mktime(0, 0, 0, $row['bulan'], 10));
+  $totalOrderPerBulan[$row['bulan']] = (int)$row['total_order'];
+}
+
+
+// Ambil data Order + Visitor per bulan
+$queryOrderVisitor = mysqli_query($config, "
+  SELECT 
+    MONTH(created_at) as bulan,
+    COUNT(id) as total_order,
+    COUNT(DISTINCT id_customer) as total_visitor
+  FROM transactions
+  WHERE YEAR(created_at) = YEAR(CURDATE())
+  GROUP BY MONTH(created_at)
+  ORDER BY bulan ASC
+");
+
+// Array bulan default (1–12)
+$bulanNama = [
+  1 => 'Januari',
+  2 => 'Februari',
+  3 => 'Maret',
+  4 => 'April',
+  5 => 'Mei',
+  6 => 'Juni',
+  7 => 'Juli',
+  8 => 'Agustus',
+  9 => 'September',
+  10 => 'Oktober',
+  11 => 'November',
+  12 => 'Desember'
+];
+
+$orderData   = array_fill(1, 12, 0);
+$visitorData = array_fill(1, 12, 0);
+
+while ($row = mysqli_fetch_assoc($queryOrderVisitor)) {
+  $orderData[(int)$row['bulan']]   = (int)$row['total_order'];
+  $visitorData[(int)$row['bulan']] = (int)$row['total_visitor'];
+}
+
+// Siapkan untuk JS
+$finalOrder   = array_values($orderData);
+$finalVisitor = array_values($visitorData);
+$finalBulan   = array_values($bulanNama);
 ?>
+
 
 <div class="container-fluid">
   <div class="row justify-content-center">
@@ -65,23 +141,10 @@ while ($row = mysqli_fetch_assoc($queryPendapatan)) {
         <div class="col">
           <h2 class="h5 page-title">Dashboard</h2>
         </div>
-        <div class="col-auto">
-          <form class="form-inline">
-            <div class="form-group d-none d-lg-inline">
-              <label for="reportrange" class="sr-only">Date Ranges</label>
-              <div id="reportrange" class="px-2 py-2 text-muted">
-                <span class="small"></span>
-              </div>
-            </div>
-            <div class="form-group">
-              <button type="button" class="btn btn-sm"><span class="fe fe-refresh-ccw fe-16 text-muted"></span></button>
-              <button type="button" class="btn btn-sm mr-2"><span class="fe fe-filter fe-16 text-muted"></span></button>
-            </div>
-          </form>
-        </div>
       </div>
-
       <!-- .row -->
+
+
       <div class="row">
         <div class="col-md-6 col-xl-3 mb-4">
           <div class="card shadow  text-white">
@@ -137,7 +200,7 @@ while ($row = mysqli_fetch_assoc($queryPendapatan)) {
                 <div class="col pr-0">
                   <p class="small text-muted mb-0">Total Omset bulanan </p>
                   <span class="h3 mb-0 text-white">
-                    Duarr
+                    <?= 'Rp. ' . number_format($totalPendapatanBulan, 0, ',', '.') ?>
                   </span>
                   <span class="small text-muted">+5.5%</span>
                 </div>
@@ -156,51 +219,8 @@ while ($row = mysqli_fetch_assoc($queryPendapatan)) {
                 </div>
                 <div class="col pr-0">
                   <p class="small text-muted mb-0">Orders</p>
-                  <span class="h3 mb-0">1,869</span>
+                  <span class="h3 mb-0"><?= $totalOrder ?></span>
                   <span class="small text-success">+16.5%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-3 mb-4">
-          <div class="card shadow">
-            <div class="card-body">
-              <div class="row align-items-center">
-                <div class="col-3 text-center">
-                  <span class="circle circle-sm bg-primary">
-                    <i class="fe fe-16 fe-filter text-white mb-0"></i>
-                  </span>
-                </div>
-                <div class="col">
-                  <p class="small text-muted mb-0">Conversion</p>
-                  <div class="row align-items-center no-gutters">
-                    <div class="col-auto">
-                      <span class="h3 mr-2 mb-0"> 86.6% </span>
-                    </div>
-                    <div class="col-md-12 col-lg">
-                      <div class="progress progress-sm mt-2" style="height:3px">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 87%" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-3 mb-4">
-          <div class="card shadow">
-            <div class="card-body">
-              <div class="row align-items-center">
-                <div class="col-3 text-center">
-                  <span class="circle circle-sm bg-primary">
-                    <i class="fe fe-16 fe-activity text-white mb-0"></i>
-                  </span>
-                </div>
-                <div class="col">
-                  <p class="small text-muted mb-0">AVG Orders</p>
-                  <span class="h3 mb-0">$80</span>
                 </div>
               </div>
             </div>
@@ -231,8 +251,8 @@ while ($row = mysqli_fetch_assoc($queryPendapatan)) {
             <div class="card-body">
               <div class="row align-items-center">
                 <div class="col">
-                  <span class="h2 mb-0">$1.2K</span>
-                  <p class="small text-muted mb-0">Monthly Sales</p>
+                  <span class="h2 mb-0">Rp. <?= number_format($totalPendapatan, 0, ',', '.') ?></span>
+                  <p class="small text-muted mb-0">Pendapatan Setahun</p>
                   <span class="badge badge-pill badge-success">+15.5%</span>
                 </div>
                 <div class="col-auto">
@@ -259,6 +279,29 @@ while ($row = mysqli_fetch_assoc($queryPendapatan)) {
           </div>
         </div>
       </div> <!-- .row-->
+
+      <!-- setting tanggal dan bulan -->
+      <div class="col-auto">
+        <form class="form-inline">
+          <div class="form-group d-none d-lg-inline">
+            <label for="reportrange" class="sr-only">Date Ranges</label>
+            <div id="reportrange" class="px-2 py-2 text-muted">
+              <span class="small"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-sm"><span class="fe fe-refresh-ccw fe-16 text-muted"></span></button>
+            <button type="button" class="btn btn-sm mr-2"><span class="fe fe-filter fe-16 text-muted"></span></button>
+          </div>
+        </form>
+      </div>
+
+      <!-- grafik chart -->
+      <div class="col-md-12">
+        <div class="chart-box">
+          <div id="orderVisitorChart"></div>
+        </div>
+      </div>
 
       <div class="row">
         <!-- simple table -->
@@ -288,9 +331,10 @@ while ($row = mysqli_fetch_assoc($queryPendapatan)) {
                       <td><?= $row['no_transaction'] ?></td>
                       <td><?= date('d-m-Y', strtotime($row['tanggal'])) ?></td>
                       <td><?= $row['customer_name'] ?></td>
-                      <td><?= $status = pembayaran($row['status'])?></td>
+                      <td><?= $status = metodePembayaran($row['pembayaran']) ?></td>
                       <td><?= "Rp. " . number_format($row['total_pendapatan'], 0, ',', '.') ?></td>
-                      <td></td>
+                      <td><?= statusTransaksi($row['status']); ?></td>
+
                       <td>
                         <div class="button-action">
                           <a href="print.php?tanggal=<?= $row['tanggal'] ?>"
@@ -307,3 +351,56 @@ while ($row = mysqli_fetch_assoc($queryPendapatan)) {
           </div>
         </div> <!-- simple table -->
       </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          var options = {
+            chart: {
+              height: 350,
+              type: 'line'
+            },
+            series: [{
+                name: 'Total Order',
+                type: 'column',
+                data: <?= json_encode($finalOrder) ?>
+              },
+              {
+                name: 'Total Visitor',
+                type: 'line',
+                data: <?= json_encode($finalVisitor) ?>
+              }
+            ],
+            stroke: {
+              width: [0, 3]
+            },
+            dataLabels: {
+              enabled: true,
+              enabledOnSeries: [1]
+            },
+            labels: <?= json_encode($finalBulan) ?>,
+            xaxis: {
+              categories: <?= json_encode($finalBulan) ?>
+            },
+            yaxis: [{
+                title: {
+                  text: 'Total Order'
+                }
+              },
+              {
+                opposite: true,
+                title: {
+                  text: 'Total Visitor'
+                }
+              }
+            ],
+            colors: ['#00E396', '#008FFB'],
+            legend: {
+              position: 'top'
+            }
+          };
+
+          var chart = new ApexCharts(document.querySelector("#orderVisitorChart"), options);
+          chart.render();
+        });
+      </script>
